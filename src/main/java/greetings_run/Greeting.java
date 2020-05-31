@@ -9,16 +9,7 @@ import user.User;
 public class Greeting {
 	
 	public static User getUser(Command c, String name) {
-		User user = new User("");
-		
-		for(User u: c.getUserList()) {
-			if(u.getUserName().equalsIgnoreCase(name))
-				user = u;
-		}
-		
-		return user;
-	}
-	
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		ArrayList<User> users = new ArrayList<User>();
