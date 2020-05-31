@@ -23,12 +23,12 @@ public class Command {
 		return greetedUsers;
 	}
 	
-	public int greeted(String userName) {
+	public String greeted(String userName) {
 		for(User u: UserList)
 			if(u.getUserName().equalsIgnoreCase(userName))
-				return u.getGreetCount();
+				return u.toString();
 		
-		return -1;
+		return "";
 	}
 	
 	public int counter() {

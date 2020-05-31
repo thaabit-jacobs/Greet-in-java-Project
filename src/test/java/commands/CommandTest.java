@@ -35,7 +35,7 @@ class CommandTest {
 		users.get(1).greet();
 		users.get(1).greet();
 		
-		assertEquals(3, com.greeted("Sarah"));
+		assertEquals(true, com.greeted("Sarah").equals("Sarah: greeted:3"));
 	}
 	
 	@Test

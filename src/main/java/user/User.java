@@ -56,6 +56,6 @@ public class User {
 	
 	public String toString() {
 		Formatter f = new Formatter();
-		return f.format("%s:%d", userName, greetCount).toString();
+		return f.format("%s: greeted:%d", userName, greetCount).toString();
 	}
 }

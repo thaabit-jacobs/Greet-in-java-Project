@@ -1,10 +1,12 @@
 package commands;
 
+import java.util.ArrayList;
+
 import user.User;
 
 public class Processor {
 	
-	Command com;
+	private Command com;
 	
 	public Processor(Command com) {
 		
@@ -32,22 +34,58 @@ public class Processor {
 		return getUser(name).greet(language);
 	}
 	
+	//greeted proccesor
+	public String processGreeted(String name) {
+		
+		if(name == "") 
+			return com.greeted().toString();
+		
+		return com.greeted(name);	
+	}
+	
+	public void processClear(String name) {
+		
+		if(name == "")
+			com.clear();
+		
+		com.clear(name);
+	}
+	
 	//processor method to call the appropriate processor method depending on the command
-	public void processCommand(String userCom) {
-		String command = userCom.substring(0, userCom.indexOf(" "));
-		String name = userCom.substring(userCom.indexOf(" ") + 1);
+	public void processCommand(String userCommand) {
+		String command = userCommand.substring(0, userCommand.indexOf(" "));
+		String name = userCommand.substring(userCommand.indexOf(" ") + 1);
 		String language;
 		
-		if((command.length() + name.length() + 1) != userCom.length()) {
-			name = userCom.substring(userCom.indexOf(" ") + 1, userCom.lastIndexOf(" "));
-			language = userCom.substring(userCom.lastIndexOf(" ") + 1);
+		if((command.length() + name.length() + 1) != userCommand.length()) {
+			name = userCommand.substring(userCommand.indexOf(" ") + 1, userCommand.lastIndexOf(" "));
+			language = userCommand.substring(userCommand.lastIndexOf(" ") + 1);
 		} else
-			language = "";		
+			language = "";	
 		
+		switch(userCommand) {
+		case "help":
+			com.help();
+			break;
+		case "counter":
+			com.counter();
+			break;
+		case "greet":
+			processGreet(name, language);
+			break;
+		case "greeted":
+			processGreeted(name);
+			break;
+		case "clear":
+			processClear(name);
+			break;
+		default:
+			System.out.println("invalid command");
+		}
 	}
 	
-	public static void main(String[] args) {
-		System.out.println();
+	public Command getCommand() {
+		return com;
 	}
-	
+
 }
