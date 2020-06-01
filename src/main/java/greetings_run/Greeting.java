@@ -21,11 +21,8 @@ public class Greeting {
 		Command com = new Command(users);
 		Processor p = new Processor(com);
 		
-		
-		
 		while(true) {
-			System.out.println("\nEnter command: ");
-			System.out.println("*************");
+			System.out.print("\nEnter command: ");
 			
 			String ui = sc.nextLine();
 			
@@ -33,8 +30,6 @@ public class Greeting {
 				return;
 			
 			p.processCommand(ui);
-			
-			
 		}
 	}
 }
