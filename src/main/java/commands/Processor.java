@@ -26,21 +26,21 @@ public class Processor {
 	}
 	
 	//greet processor
-	public String processGreet(String name, String language){
+	public void processGreet(String name, String language){
 		
 		if(language == "")
-			return getUser(name).greet();
+			System.out.println(getUser(name).greet());
 		
-		return getUser(name).greet(language);
+		System.out.println(getUser(name).greet(language));
 	}
 	
 	//greeted proccesor
-	public String processGreeted(String name) {
+	public void processGreeted(String name) {
 		
 		if(name == "") 
-			return com.greeted().toString();
+			System.out.println(com.greeted().toString());
 		
-		return com.greeted(name);	
+		System.out.println(com.greeted(name));	
 	}
 	
 	public void processClear(String name) {
@@ -51,41 +51,61 @@ public class Processor {
 		com.clear(name);
 	}
 	
+	public String[] processInput(String userInput) {
+		String command = "";
+		String name = "";
+		String language = "";
+		
+		int spaceOne = userInput.indexOf(" ");
+		int spaceTwo = userInput.lastIndexOf(" ");
+		
+		if(spaceOne == -1 && spaceTwo == -1) {
+			command = userInput;
+		} else if(spaceOne != -1 && spaceTwo == -1) {
+			command = userInput.substring(0, spaceOne);
+			name = userInput.substring(spaceOne + 1);
+		} else if(spaceOne != -1 && spaceTwo != -1) {
+			command = userInput.substring(0, spaceOne);
+			name = userInput.substring(spaceOne + 1, spaceTwo);
+			language = userInput.substring(spaceTwo + 1);
+		}
+		
+		String[] arr = {command, name, language};
+		
+		return arr;
+	}
+	
 	//processor method to call the appropriate processor method depending on the command
 	public void processCommand(String userCommand) {
-		String command = userCommand.substring(0, userCommand.indexOf(" "));
-		String name = userCommand.substring(userCommand.indexOf(" ") + 1);
-		String language;
 		
-		if((command.length() + name.length() + 1) != userCommand.length()) {
-			name = userCommand.substring(userCommand.indexOf(" ") + 1, userCommand.lastIndexOf(" "));
-			language = userCommand.substring(userCommand.lastIndexOf(" ") + 1);
-		} else
-			language = "";	
+		String[] arr = processInput(userCommand);
 		
-		switch(userCommand) {
-		case "help":
-			com.help();
-			break;
-		case "counter":
-			com.counter();
-			break;
-		case "greet":
-			processGreet(name, language);
-			break;
-		case "greeted":
-			processGreeted(name);
-			break;
-		case "clear":
-			processClear(name);
-			break;
-		default:
-			System.out.println("invalid command");
-		}
+		if(arr[0].equals("greet"))
+			processGreet(arr[1], arr[2]);
+		else if(arr[0].equals("greeted"))
+			processGreeted(arr[1]);
+		else if(arr[0].equals("counter"))
+			System.out.println("number of unique users greeted: " + com.counter());
+		else if(arr[0].equals("clear"))
+			processClear(arr[1]);
+		else if(arr[0].equals("help"))
+			System.out.println(com.help());
+		else
+			System.out.println("Invalid command"); 
+
 	}
 	
 	public Command getCommand() {
 		return com;
+	}
+	
+	public static void main(String[] args) {
+		Processor p = new Processor(new Command(new ArrayList<User>()));
+		
+		String[] arr = p.processInput("greet Thaabit Language");
+		System.out.println(arr[0]);
+		System.out.println(arr[1]);
+		System.out.println(arr[2]);
 	}
 
 }

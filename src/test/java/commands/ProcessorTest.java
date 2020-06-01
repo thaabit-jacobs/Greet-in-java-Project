@@ -26,18 +26,20 @@ class ProcessorTest {
 		ul.add(new User("Thaabit"));
 		ul.add(new User("Kauthar"));
 		Processor p = new Processor(new Command(ul));
+		p.processGreet("Thaabit", "Afrikaans");
 		
-		assertEquals(true, p.processGreet("Thaabit", "Afrikaans").equals("Hallo Thaabit"));
+		assertEquals(1, p.getUser("Thaabit").getGreetCount());
 	}
 	
 	@Test
-	void shouldGreetUserInDefaultLanguage() {
+	void shouldGreetUserWithDefaultLanguage() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ul.add(new User("Thaabit"));
 		ul.add(new User("Kauthar"));
 		Processor p = new Processor(new Command(ul));
+		p.processGreet("Thaabit", "");
 		
-		assertEquals(true, p.processGreet("Thaabit", "").equals("Hello Thaabit"));
+		assertEquals(1, p.getUser("Thaabit").getGreetCount());
 	}
 	
 	@Test
@@ -47,8 +49,9 @@ class ProcessorTest {
 		ul.get(0).greet();
 		
 		Processor p = new Processor(new Command(ul));
+		p.processGreeted("Thaabit");
 		
-		assertEquals(true, p.processGreeted("Thaabit").equals("Thaabit: greeted:1"));
+		assertEquals(1, p.getUser("Thaabit").getGreetCount());
 	}
 	
 	@Test
@@ -73,5 +76,35 @@ class ProcessorTest {
 		p.processClear("Thaabit");
 		
 		assertEquals(0, ul.get(0).getGreetCount());
+	}
+	
+	@Test
+	void shouldReturnUserCommand() {
+		ArrayList<User> ul = new ArrayList<User>();
+		Processor p = new Processor(new Command(ul));
+		
+		String [] arr = p.processInput("help");
+		
+		assertEquals(true, arr[0].equals("help"));
+	}
+	
+	@Test
+	void shouldReturnUserName() {
+		ArrayList<User> ul = new ArrayList<User>();
+		Processor p = new Processor(new Command(ul));
+		
+		String [] arr = p.processInput("clear Thaabit");
+		
+		assertEquals(true, arr[1].equals("Thaabit"));
+	}
+	
+	@Test
+	void shouldReturnUserLanguage() {
+		ArrayList<User> ul = new ArrayList<User>();
+		Processor p = new Processor(new Command(ul));
+		
+		String [] arr = p.processInput("greet Thaabit English");
+		
+		assertEquals(true, arr[2].equals("English"));
 	}
 }
