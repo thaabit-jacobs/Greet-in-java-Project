@@ -13,7 +13,7 @@ public class Processor {
 		this.com = com;
 		
 	}
-	//get access to a specific user
+	
 	public User getUser(String name) {
 		User user = new User("");
 		
@@ -25,30 +25,28 @@ public class Processor {
 		return user;
 	}
 	
-	//greet processor
 	public void processGreet(String name, String language){
 		
 		if(language == "")
 			System.out.println(getUser(name).greet());
-		
-		System.out.println(getUser(name).greet(language));
+		else
+			System.out.println(getUser(name).greet(language));
 	}
 	
-	//greeted proccesor
 	public void processGreeted(String name) {
 		
 		if(name == "") 
 			System.out.println(com.greeted().toString());
-		
-		System.out.println(com.greeted(name));	
+		else
+			System.out.println(com.greeted(name));	
 	}
 	
 	public void processClear(String name) {
 		
 		if(name == "")
 			com.clear();
-		
-		com.clear(name);
+		else
+			com.clear(name);
 	}
 	
 	public String[] processInput(String userInput) {
@@ -56,18 +54,18 @@ public class Processor {
 		String name = "";
 		String language = "";
 		
-		int spaceOne = userInput.indexOf(" ");
-		int spaceTwo = userInput.lastIndexOf(" ");
+		int firstSpace = userInput.indexOf(" ");
+		int secondSpace = userInput.lastIndexOf(" ");
 		
-		if(spaceOne == -1 && spaceTwo == -1) {
+		if(firstSpace == -1) {
 			command = userInput;
-		} else if(spaceOne != -1 && spaceTwo == -1) {
-			command = userInput.substring(0, spaceOne);
-			name = userInput.substring(spaceOne + 1);
-		} else if(spaceOne != -1 && spaceTwo != -1) {
-			command = userInput.substring(0, spaceOne);
-			name = userInput.substring(spaceOne + 1, spaceTwo);
-			language = userInput.substring(spaceTwo + 1);
+		} else if(firstSpace != -1 && (firstSpace == secondSpace)) {
+			command = userInput.substring(0, firstSpace);
+			name = userInput.substring(firstSpace + 1);
+		} else {
+			command = userInput.substring(0, firstSpace);
+			name = userInput.substring(firstSpace + 1, secondSpace);
+			language = userInput.substring(secondSpace + 1);
 		}
 		
 		String[] arr = {command, name, language};
@@ -97,15 +95,6 @@ public class Processor {
 	
 	public Command getCommand() {
 		return com;
-	}
-	
-	public static void main(String[] args) {
-		Processor p = new Processor(new Command(new ArrayList<User>()));
-		
-		String[] arr = p.processInput("greet Thaabit Language");
-		System.out.println(arr[0]);
-		System.out.println(arr[1]);
-		System.out.println(arr[2]);
 	}
 
 }
