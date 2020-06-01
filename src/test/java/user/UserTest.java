@@ -13,25 +13,25 @@ class UserTest {
 	}
 	
 	@Test
-	void defaultGreet() {
+	void defaultGreetingShouldBeEnglish() {
 		User u = new User("Thaabit");
 		assertEquals(true, u.greet().equals("Hello Thaabit"));
 	}
 	
 	@Test
-	void greetInEnglish() {
+	void shouldGreetInEnglish() {
 		User u = new User("Thaabit");
 		assertEquals(true, u.greet("English").equals("Hello Thaabit"));
 	}
 	
 	@Test
-	void greetInAfrikaans() {
+	void shouldgreetInAfrikaans() {
 		User u = new User("Thaabit");
 		assertEquals(true, u.greet("Afrikaans").equals("Hallo Thaabit"));
 	}
 	
 	@Test
-	void greetInZulu() {
+	void shouldgreetInZulu() {
 		User u = new User("Thaabit");
 		assertEquals(true, u.greet("Zulu").equals("Sawubona Thaabit"));
 	}
