@@ -48,7 +48,8 @@ public class Command {
 			User u = listItr.next();
 			
 			if(u.getGreetCount() > 0)
-				listItr.remove();
+				u.setGreetCount();
+	
 		}	
 	}
 	
@@ -60,10 +61,11 @@ public class Command {
 	}
 	
 	public String help() {
-		return "Commands: \n<greet name language> \n<greeted> \n<greeted username> \n<counter> \n<clear> \n<clear username> \n<exit> \n<help>";
+		return "\ngreet   [username] [language] \ngreeted \ngreeted [username] \ncounter \nclear \nclear   [username] \nhelp \nexit";
 	}
 	
 	public ArrayList<User> getUserList(){
 		return UserList;
 	}
+
 }
