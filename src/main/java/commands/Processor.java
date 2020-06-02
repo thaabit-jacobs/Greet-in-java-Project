@@ -1,7 +1,5 @@
 package commands;
 
-import java.util.ArrayList;
-
 import user.User;
 
 public class Processor {
@@ -15,7 +13,7 @@ public class Processor {
 	}
 	
 	public User getUser(String name) {
-		User user = new User("");
+		User user = new User("", 0);
 		
 		for(User u: com.getUserList()) {
 			if(u.getUserName().equalsIgnoreCase(name))

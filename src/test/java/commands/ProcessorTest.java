@@ -13,8 +13,8 @@ class ProcessorTest {
 	@Test
 	void shouldGetUser() {
 		ArrayList<User> ul = new ArrayList<User>();
-		ul.add(new User("Thaabit"));
-		ul.add(new User("Kauthar"));
+		ul.add(new User("Thaabit", 0));
+		ul.add(new User("Kauthar", 0));
 		Processor p = new Processor(new Command(ul));
 		
 		assertEquals(true, p.getUser("Kauthar").getUserName().equals("Kauthar"));
@@ -23,8 +23,8 @@ class ProcessorTest {
 	@Test
 	void shouldGreetUserWithLanguage() {
 		ArrayList<User> ul = new ArrayList<User>();
-		ul.add(new User("Thaabit"));
-		ul.add(new User("Kauthar"));
+		ul.add(new User("Thaabit", 0));
+		ul.add(new User("Kauthar", 0));
 		Processor p = new Processor(new Command(ul));
 		p.processGreet("Thaabit", "Afrikaans");
 		
@@ -34,8 +34,8 @@ class ProcessorTest {
 	@Test
 	void shouldGreetUserWithDefaultLanguage() {
 		ArrayList<User> ul = new ArrayList<User>();
-		ul.add(new User("Thaabit"));
-		ul.add(new User("Kauthar"));
+		ul.add(new User("Thaabit", 0));
+		ul.add(new User("Kauthar", 0));
 		Processor p = new Processor(new Command(ul));
 		p.processGreet("Thaabit", "");
 		
@@ -45,7 +45,7 @@ class ProcessorTest {
 	@Test
 	void shouldReturnNumberOfTimesUserIsGreeted() {
 		ArrayList<User> ul = new ArrayList<User>();
-		ul.add(new User("Thaabit"));
+		ul.add(new User("Thaabit", 0));
 		ul.get(0).greet();
 		
 		Processor p = new Processor(new Command(ul));
@@ -57,8 +57,8 @@ class ProcessorTest {
 	@Test
 	void shouldClearAllUsersGreeted() {
 		ArrayList<User> ul = new ArrayList<User>();
-		ul.add(new User("Thaabit"));
-		ul.add(new User("Kauthar"));
+		ul.add(new User("Thaabit", 0));
+		ul.add(new User("Kauthar", 0));
 		
 		Processor p = new Processor(new Command(ul));
 		p.processClear("");
@@ -69,7 +69,7 @@ class ProcessorTest {
 	@Test
 	void shouldClearUserGreetCount() {
 		ArrayList<User> ul = new ArrayList<User>();
-		ul.add(new User("Thaabit"));
+		ul.add(new User("Thaabit", 0));
 		ul.get(0).greet();
 		
 		Processor p = new Processor(new Command(ul));
@@ -107,4 +107,5 @@ class ProcessorTest {
 		
 		assertEquals(true, arr[2].equals("English"));
 	}
+	
 }
