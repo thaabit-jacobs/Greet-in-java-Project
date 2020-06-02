@@ -13,9 +13,9 @@ class CommandTest {
 	@Test
 	void shouldDisplayGreetedUsers() {
 		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("John"));
-		users.add(new User("Sarah"));
-		users.add(new User("Mbuyi"));
+		users.add(new User("John", 0));
+		users.add(new User("Sarah", 0));
+		users.add(new User("Mbuyi", 0));
 		
 		Command com = new Command(users);
 		users.get(0).greet();
@@ -26,24 +26,24 @@ class CommandTest {
 	@Test
 	void shouldReturnTheNumOfTimesUserGreeted() {
 		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("John"));
-		users.add(new User("Sarah"));
-		users.add(new User("Mbuyi"));
+		users.add(new User("John", 0));
+		users.add(new User("Sarah", 0));
+		users.add(new User("Mbuyi", 0));
 		
 		Command com = new Command(users);
 		users.get(1).greet();
 		users.get(1).greet();
 		users.get(1).greet();
 		
-		assertEquals(true, com.greeted("Sarah").equals("Sarah: greeted:3"));
+		assertEquals(true, com.greeted("Sarah").equals("Number of times Sarah was greeted: 3"));
 	}
 	
 	@Test
 	void shouldReturnTheNumUsersThatHaveBeenGreeted() {
 		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("John"));
-		users.add(new User("Sarah"));
-		users.add(new User("Mbuyi"));
+		users.add(new User("John", 0));
+		users.add(new User("Sarah", 0));
+		users.add(new User("Mbuyi", 0));
 		
 		Command com = new Command(users);
 		users.get(0).greet();
@@ -54,11 +54,11 @@ class CommandTest {
 	
 	
 	@Test
-	void shouldRemoveAllGreetdUsers() {
+	void shouldSetCounterToZero() {
 		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("John"));
-		users.add(new User("Sarah"));
-		users.add(new User("Mbuyi"));
+		users.add(new User("John", 0));
+		users.add(new User("Sarah", 0));
+		users.add(new User("Mbuyi", 0));
 		
 		Command com = new Command(users);
 		users.get(0).greet();
@@ -66,15 +66,15 @@ class CommandTest {
 		
 		com.clear();
 		
-		assertEquals(true, com.getUserList().get(0).getUserName().equals("Mbuyi"));
+		assertEquals(0, com.getUserList().get(0).getGreetCount());
 	}
 	
 	@Test
 	void shouldRemoveUserSpecifiedByUserName() {
 		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("John"));
-		users.add(new User("Sarah"));
-		users.add(new User("Mbuyi"));
+		users.add(new User("John", 0));
+		users.add(new User("Sarah", 0));
+		users.add(new User("Mbuyi", 0));
 		
 		Command com = new Command(users);
 		users.get(0).greet();
@@ -86,11 +86,4 @@ class CommandTest {
 		assertEquals(2, com.counter());
 	}
 	
-	@Test
-	void shouldGetCommandsList() {
-		ArrayList<User> users = new ArrayList<User>();
-		Command com = new Command(users);
-
-		assertEquals(true, com.help().equals("Commands: \n<greet name language> \n<greeted> \n<greeted username> \n<counter> \n<clear> \n<clear username> \n<exit> \n<help>"));
-	}
 }

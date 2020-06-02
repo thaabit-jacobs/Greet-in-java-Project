@@ -42,15 +42,9 @@ public class Command {
 	}
 	
 	public void clear() {
-		ListIterator<User> listItr = UserList.listIterator();
-		
-		while(listItr.hasNext()) {
-			User u = listItr.next();
-			
+		for(User u: UserList)
 			if(u.getGreetCount() > 0)
 				u.setGreetCount();
-	
-		}	
 	}
 	
 	public void clear(String userName) {
