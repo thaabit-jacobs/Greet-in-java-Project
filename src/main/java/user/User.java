@@ -10,11 +10,11 @@ public class User {
 	
 	private int greetCount;
 	
-	public User(String userName) {
+	public User(String userName, int greetCount) {
 		
 		this.userName = userName;
 		
-		this.greetCount = 0;
+		this.greetCount = greetCount;
 		
 		languages = new HashMap<String, String>();
 		
@@ -56,6 +56,8 @@ public class User {
 	
 	public String toString() {
 		Formatter f = new Formatter();
-		return f.format("Number of times %s was greeted: %d", userName, greetCount).toString();
+		String s = f.format("Number of times %s was greeted: %d", userName, greetCount).toString();
+		f.close();
+		return s;
 	}
 }
