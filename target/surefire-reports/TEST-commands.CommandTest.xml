@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="commands.CommandTest" time="0.026" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="commands.CommandTest" time="0.031" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -18,7 +18,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\insta\bin"/>
-    <property name="sun.java.command" value="C:\Users\THAABI~1\AppData\Local\Temp\surefire1392919937636802297\surefirebooter367980541503593283.jar C:\Users\thaabit-jacobs\AppData\Local\Temp\surefire1392919937636802297 2020-06-03T19-01-16_006-jvmRun1 surefire7871670791220742605tmp surefire_04766493019924808782tmp"/>
+    <property name="sun.java.command" value="C:\Users\THAABI~1\AppData\Local\Temp\surefire8194389954288169411\surefirebooter8036802814162038461.jar C:\Users\thaabit-jacobs\AppData\Local\Temp\surefire8194389954288169411 2020-06-04T10-58-53_909-jvmRun1 surefire4572024224952837680tmp surefire_04121722151726012850tmp"/>
     <property name="surefire.test.class.path" value="C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\target\test-classes;C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\target\classes;C:\Users\thaabit-jacobs\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.4.0\junit-jupiter-api-5.4.0.jar;C:\Users\thaabit-jacobs\.m2\repository\org\apiguardian\apiguardian-api\1.0.0\apiguardian-api-1.0.0.jar;C:\Users\thaabit-jacobs\.m2\repository\org\opentest4j\opentest4j\1.1.1\opentest4j-1.1.1.jar;C:\Users\thaabit-jacobs\.m2\repository\org\junit\platform\junit-platform-commons\1.4.0\junit-platform-commons-1.4.0.jar;C:\Users\thaabit-jacobs\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.4.0\junit-jupiter-engine-5.4.0.jar;C:\Users\thaabit-jacobs\.m2\repository\org\junit\platform\junit-platform-engine\1.4.0\junit-platform-engine-1.4.0.jar;C:\Users\thaabit-jacobs\.m2\repository\com\h2database\h2\1.4.199\h2-1.4.199.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\thaabit-jacobs"/>
@@ -31,7 +31,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\THAABI~1\AppData\Local\Temp\surefire1392919937636802297\surefirebooter367980541503593283.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\THAABI~1\AppData\Local\Temp\surefire8194389954288169411\surefirebooter8036802814162038461.jar"/>
     <property name="sun.boot.class.path" value="C:\Program Files\Java\insta\lib\resources.jar;C:\Program Files\Java\insta\lib\rt.jar;C:\Program Files\Java\insta\lib\sunrsasign.jar;C:\Program Files\Java\insta\lib\jsse.jar;C:\Program Files\Java\insta\lib\jce.jar;C:\Program Files\Java\insta\lib\charsets.jar;C:\Program Files\Java\insta\lib\jfr.jar;C:\Program Files\Java\insta\classes"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot Client Compiler"/>
@@ -60,9 +60,9 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="shouldRemoveUserSpecifiedByUserName" classname="commands.CommandTest" time="0.013"/>
-  <testcase name="shouldDisplayGreetedUsers" classname="commands.CommandTest" time="0.001"/>
-  <testcase name="shouldReturnTheNumOfTimesUserGreeted" classname="commands.CommandTest" time="0.001"/>
+  <testcase name="shouldRemoveUserSpecifiedByUserName" classname="commands.CommandTest" time="0.016"/>
+  <testcase name="shouldDisplayGreetedUsers" classname="commands.CommandTest" time="0"/>
+  <testcase name="shouldReturnTheNumOfTimesUserGreeted" classname="commands.CommandTest" time="0"/>
   <testcase name="shouldReturnTheNumUsersThatHaveBeenGreeted" classname="commands.CommandTest" time="0"/>
   <testcase name="shouldSetCounterToZero" classname="commands.CommandTest" time="0"/>
 </testsuite>

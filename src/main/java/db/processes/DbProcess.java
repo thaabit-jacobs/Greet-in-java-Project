@@ -1,4 +1,4 @@
-package db_processor;
+package db.processes;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +35,7 @@ public class DbProcess {
 		return con;
 	}
 	
-	public void persistDataToDb(ArrayList<User> u) throws SQLException {
+	public void moveDataToDataDase(ArrayList<User> u) throws SQLException {
 		int id = 0;
 		String updateDataBase = "UPDATE USERS SET GREET_COUNT=? WHERE ID=?";
 		PreparedStatement pstmt = con.prepareStatement(updateDataBase);

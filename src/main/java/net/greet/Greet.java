@@ -1,17 +1,15 @@
-package greetings_run;
+package net.greet;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
 import commands.*;
-import db_processor.DbProcess;
+import db.processes.DbProcess;
 import user.User;
 
-public class Greeting {	
+public class Greet {	
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		Class.forName("org.h2.Driver");
@@ -40,7 +38,7 @@ public class Greeting {
 			p.processCommand(ui);
 		}
 		
-		dbprocess.persistDataToDb(users);
+		dbprocess.moveDataToDataDase(users);
 		
 		sc.close();
 		dbprocess.getConnection().close();

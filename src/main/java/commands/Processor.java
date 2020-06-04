@@ -25,7 +25,9 @@ public class Processor {
 	
 	public void processGreet(String name, String language){
 		
-		if(language == "")
+		if(language == "" && name == "")
+			System.out.println("Must enter name to greet user");
+		else if(language == "")
 			System.out.println(getUser(name).greet());
 		else
 			System.out.println(getUser(name).greet(language));
@@ -33,9 +35,12 @@ public class Processor {
 	
 	public void processGreeted(String name) {
 		
-		if(name == "") 
-			System.out.println(com.greeted().toString());
-		else
+		if(com.counter() == 0) {
+			System.out.print("No users have been greeted");
+		} else if(name == "") {
+			for(User u: com.greeted())
+				System.out.println(u);
+		} else
 			System.out.println(com.greeted(name));	
 	}
 	

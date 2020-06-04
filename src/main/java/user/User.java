@@ -18,10 +18,10 @@ public class User {
 		
 		languages = new HashMap<String, String>();
 		
-		languages.put("English", "Hello " + this.userName);
-		languages.put("Afrikaans", "Hallo " + this.userName);
-		languages.put("Zulu", "Sawubona " + this.userName);
-		
+		languages.put("English", "Good day " + this.userName);
+		languages.put("Afrikaans", "Goie dag " + this.userName);
+		languages.put("Zulu", "Usuku oluhle " + this.userName);
+		languages.put("Xhosa", "Mholweni emini nje " + this.userName);
 	}
 	
 	public String getUserName() {
@@ -47,7 +47,7 @@ public class User {
 			} 
 		}
 		
-		return "";
+		return "invalid language";
 	}
 	
 	public void setGreetCount() {
