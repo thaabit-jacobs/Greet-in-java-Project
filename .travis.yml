@@ -1,3 +1,4 @@
 language: java
 
-script: mvn flyway:migrate test -B
+script:
+- mvn flyway:migrate test -B
