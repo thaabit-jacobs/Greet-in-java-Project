@@ -16,8 +16,8 @@ java -cp target/* net.greet.Greet
 
 - greet &nbsp; &nbsp; &nbsp; &nbsp;[name] [language] (To greet a user)
 - greeted &nbsp; &nbsp; &nbsp; &nbsp;(Returns all the unique users have been greeted)
-- greeted [name] 	    (Returns the number times user has been greeted)
+- greeted  &nbsp; &nbsp; &nbsp; &nbsp; [name] 	    (Returns the number times user has been greeted)
 - clear   		    (Sets all users greet count to 0 that have been greeted)
-- clear   [name] 	    (Sets user's greet count to 0)
+- clear &nbsp; &nbsp; &nbsp; &nbsp; [name] 	    (Sets user's greet count to 0)
 - help    		    (Returns commands)
 - exit                      (Exit application)
