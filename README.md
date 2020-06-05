@@ -12,6 +12,7 @@ In the main project diectory run command:
 
 java -cp target/* net.greet.Greet
 
+## Commands
 - greet &nbsp; &nbsp; &nbsp; &nbsp;[name] [language] (To greet a user)
 
 - greeted &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;   &nbsp; &nbsp;   &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; (Returns all the unique users have been greeted)
