@@ -9,6 +9,7 @@ Greet-in-java project allows you to greet users in a database in 4 different lan
 ## Run Greet-in-java
 
 In the main project diectory run command: 
+
 java -cp target/* net.greet.Greet
 
 ## Commands
