@@ -24,6 +24,7 @@ public class Greet {
 		ArrayList<User> users = dbprocess.moveDataToList();
 
 		Command com = new Command(users);
+		
 		Processor p = new Processor(com);
 		
 		MAIN:
