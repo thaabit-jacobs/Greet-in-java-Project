@@ -5,27 +5,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
 
-import commands.*;
-import db.processes.DbProcess;
-import user.User;
-
+import net.greet.commands.Command;
+import net.greet.processors.DataBaseCommandsProcessor;
+import net.greet.processors.UserInputProcessor;
+//import commands.*;
+import net.greet.users.*;
+/*
 public class Greet {	
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		Class.forName("org.h2.Driver");
-		
-		final String jdbcURL = "jdbc:h2:file:./target/user_db";
-	
-		Connection con = DriverManager.getConnection(jdbcURL, "sa", "");
-		
-		DbProcess dbprocess = new DbProcess(con);
+		DataBaseCommandsProcessor dbprocess = new DataBaseCommandsProcessor(con);
 		
 		Scanner sc = new Scanner(System.in);
 		ArrayList<User> users = dbprocess.moveDataToList();
 
 		Command com = new Command(users);
 		
-		Processor p = new Processor(com);
+		UserInputProcessor p = new UserInputProcessor(com);
 		
 		MAIN:
 		while(true) {
@@ -45,3 +41,4 @@ public class Greet {
 		dbprocess.getConnection().close();
 	}
 }
+*/

@@ -1,5 +1,7 @@
-C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\db\processes\DbProcess.java
+C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\net\greet\processors\UserInputProcessor.java
+C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\net\greet\processors\DataBaseCommandsProcessor.java
+C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\net\greet\users\User.java
 C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\net\greet\Greet.java
-C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\user\User.java
-C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\commands\Processor.java
-C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\commands\Command.java
+C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\net\greet\processors\CommandsProcessor.java
+C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\net\greet\greetings_languages\Language.java
+C:\Users\thaabit-jacobs\Desktop\projects\greet-in-java\src\main\java\net\greet\commands\Command.java

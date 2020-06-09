@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: db.processes.DbProcessTest
+Test set: greet_languages.LanguageTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.063 s - in db.processes.DbProcessTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s - in greet_languages.LanguageTest

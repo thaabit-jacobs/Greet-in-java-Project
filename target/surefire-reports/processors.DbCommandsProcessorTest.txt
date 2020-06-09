@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: processors.DbCommandsProcessorTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.23 s <<< FAILURE! - in processors.DbCommandsProcessorTest
+shouldMoveDataFromArrayListToDatabase  Time elapsed: 0.198 s  <<< ERROR!
+org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database may be already in use: null. Possible solutions: close all other connection(s); use the server mode [90020-199]
+	at processors.DbCommandsProcessorTest.shouldMoveDataFromArrayListToDatabase(DbCommandsProcessorTest.java:38)
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/thaabit-jacobs/Desktop/projects/greet-in-java/target/user_db.mv.db [1.4.199/7]
+	at processors.DbCommandsProcessorTest.shouldMoveDataFromArrayListToDatabase(DbCommandsProcessorTest.java:38)
+
+shouldMoveDataFromDbToArrayList  Time elapsed: 0.016 s  <<< ERROR!
+org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database may be already in use: null. Possible solutions: close all other connection(s); use the server mode [90020-199]
+	at processors.DbCommandsProcessorTest.shouldMoveDataFromDbToArrayList(DbCommandsProcessorTest.java:23)
+Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/thaabit-jacobs/Desktop/projects/greet-in-java/target/user_db.mv.db [1.4.199/7]
+	at processors.DbCommandsProcessorTest.shouldMoveDataFromDbToArrayList(DbCommandsProcessorTest.java:23)
+

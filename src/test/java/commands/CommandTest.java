@@ -2,20 +2,22 @@ package commands;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import user.User;
+import net.greet.commands.Command;
+import net.greet.users.*;
 
 class CommandTest {
 
 	@Test
-	void shouldDisplayGreetedUsers() {
+	void shouldReturnListOfGreetedUsers() {
 		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("John", 0));
-		users.add(new User("Sarah", 0));
-		users.add(new User("Mbuyi", 0));
+		users.add(new User("John"));
+		users.add(new User("Sarah"));
+		users.add(new User("Mbuyi"));
 		
 		Command com = new Command(users);
 		users.get(0).greet();
@@ -24,26 +26,26 @@ class CommandTest {
 	}
 	
 	@Test
-	void shouldReturnTheNumOfTimesUserGreeted() {
+	void shouldDisplayTheNumOfTimesUserGreeted() {
 		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("John", 0));
-		users.add(new User("Sarah", 0));
-		users.add(new User("Mbuyi", 0));
+		users.add(new User("John"));
+		users.add(new User("Sarah"));
+		users.add(new User("Mbuyi"));
 		
 		Command com = new Command(users);
 		users.get(1).greet();
 		users.get(1).greet();
 		users.get(1).greet();
 		
-		assertEquals(true, com.greeted("Sarah").equals("Number of times Sarah was greeted: 3"));
+		assertEquals(true, com.greeted("Sarah").equals("Sarah has been greeted 3 time(s)"));
 	}
 	
 	@Test
-	void shouldReturnTheNumUsersThatHaveBeenGreeted() {
+	void shouldReturnTheCountOfUsersGreeted() {
 		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("John", 0));
-		users.add(new User("Sarah", 0));
-		users.add(new User("Mbuyi", 0));
+		users.add(new User("John"));
+		users.add(new User("Sarah"));
+		users.add(new User("Mbuyi"));
 		
 		Command com = new Command(users);
 		users.get(0).greet();
@@ -54,11 +56,11 @@ class CommandTest {
 	
 	
 	@Test
-	void shouldSetCounterToZero() {
+	void shouldClearAllUsersGreeted() throws ClassNotFoundException, SQLException {
 		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("John", 0));
-		users.add(new User("Sarah", 0));
-		users.add(new User("Mbuyi", 0));
+		users.add(new User("John"));
+		users.add(new User("Sarah"));
+		users.add(new User("Mbuyi"));
 		
 		Command com = new Command(users);
 		users.get(0).greet();
@@ -66,15 +68,15 @@ class CommandTest {
 		
 		com.clear();
 		
-		assertEquals(0, com.getUserList().get(0).getGreetCount());
+		assertEquals(true, com.getUserList().get(0).getUserName().equals("Mbuyi"));
 	}
 	
 	@Test
-	void shouldRemoveUserSpecifiedByUserName() {
+	void shouldRemoveUserGreetCount() {
 		ArrayList<User> users = new ArrayList<User>();
-		users.add(new User("John", 0));
-		users.add(new User("Sarah", 0));
-		users.add(new User("Mbuyi", 0));
+		users.add(new User("John"));
+		users.add(new User("Sarah"));
+		users.add(new User("Mbuyi"));
 		
 		Command com = new Command(users);
 		users.get(0).greet();
