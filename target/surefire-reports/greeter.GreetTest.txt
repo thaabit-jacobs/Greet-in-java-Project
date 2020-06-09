@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: greet_languages.LanguageTest
+Test set: greeter.GreetTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in greet_languages.LanguageTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.256 s - in greeter.GreetTest

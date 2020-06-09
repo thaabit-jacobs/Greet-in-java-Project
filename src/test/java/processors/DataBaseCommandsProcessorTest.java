@@ -19,7 +19,7 @@ import net.greet.users.*;
 class DataBaseCommandsProcessorTest {
 
 	@Test
-	void shouldMoveDataFromDbToArrayList() throws ClassNotFoundException, SQLException {
+	void shouldMoveDataFromDbToArrayList() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ArrayList<User> ul2 = new ArrayList<User>();
 		Command com = new Command(ul);
@@ -32,39 +32,50 @@ class DataBaseCommandsProcessorTest {
 		
 		assertEquals(true, ul2.get(0).getUserName().equals("Thaabit"));
 		
-		Class.forName("org.h2.Driver");
-		
-		Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "");
-		String deleteRow = "DELETE FROM USERS WHERE ID=1";
-		Statement stmt = con.createStatement();
-		stmt.executeUpdate(deleteRow);
-		con.close();
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "")) {
+			Class.forName("org.h2.Driver");
+			
+			String deleteRow = "DELETE FROM USERS WHERE ID=1";
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(deleteRow);
+			
+		} catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+		} 
 	}
 	
 	@Test
-	void shouldAddUserToDataBase() throws ClassNotFoundException, SQLException {
+	void shouldAddUserToDataBase() {
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
 		
 		dbcp.addUserToDataBase(new User("Thaabit"));
 		
-		Class.forName("org.h2.Driver");
-		
-		Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "");
-		String retrieveTable = "SELECT * FROM USERS";
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(retrieveTable);
-		rs.next();
-		
-		assertEquals(true, rs.getString("NAME").equals("Thaabit"));
-		
-		String deleteRow = "DELETE FROM USERS WHERE ID=1";
-		stmt.executeUpdate(deleteRow);
-		
-		con.close();
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "")) {
+			Class.forName("org.h2.Driver");
+			
+			String retrieveTable = "SELECT * FROM USERS";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(retrieveTable);
+			rs.next();
+			
+			assertEquals(true, rs.getString("NAME").equals("Thaabit"));
+			
+			String deleteRow = "DELETE FROM USERS WHERE ID=1";
+			stmt.executeUpdate(deleteRow);
+			
+		}  catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+		}  
 	}
 	
 	@Test
-	void shouldUpdateUserGreetCountInDataBase() throws ClassNotFoundException, SQLException {
+	void shouldUpdateUserGreetCountInDataBase() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ul.add(new User("Thaabit"));
 		Command com = new Command(ul);
@@ -79,24 +90,29 @@ class DataBaseCommandsProcessorTest {
 		
 		dbcp.updateDataBase(com.getUserList().get(0));
 		
-		Class.forName("org.h2.Driver");
-		
-		Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "");
-		String retrieveTable = "SELECT * FROM USERS";
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(retrieveTable);
-		rs.next();
-		
-		assertEquals(4, rs.getInt("GREET_COUNT"));
-		
-		String deleteRow = "DELETE FROM USERS WHERE ID=1";
-		stmt.executeUpdate(deleteRow);
-		
-		con.close();
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "")) {
+			Class.forName("org.h2.Driver");
+			
+			String retrieveTable = "SELECT * FROM USERS";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(retrieveTable);
+			rs.next();
+			
+			assertEquals(4, rs.getInt("GREET_COUNT"));
+			
+			String deleteRow = "DELETE FROM USERS WHERE ID=1";
+			stmt.executeUpdate(deleteRow);
+			
+		}  catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+		}
 	}
 	
 	@Test
-	void shouldDeleteRecordFromDataBase() throws ClassNotFoundException, SQLException {
+	void shouldDeleteRecordFromDataBase() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ul.add(new User("Thaabit"));
 		Command com = new Command(ul);
@@ -106,18 +122,24 @@ class DataBaseCommandsProcessorTest {
 		dbcp.updateDataBase(com.getUserList().get(0));
 		
 		dbcp.deleteGreetedRecordsFromDataBase();
-		
-		Class.forName("org.h2.Driver");
-		
-		Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "");
-		String count = "SELECT COUNT(*) FROM USERS";
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(count);
-		rs.next();
-		
-		assertEquals(0, rs.getInt(1));
-		
-		con.close();
+				
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "")) {
+			Class.forName("org.h2.Driver");
+			
+			String count = "SELECT COUNT(*) FROM USERS";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(count);
+			rs.next();
+			
+			assertEquals(0, rs.getInt(1));
+			
+		}  catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+		}
+
 	}
 	
 }

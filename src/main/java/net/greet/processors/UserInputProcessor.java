@@ -1,7 +1,7 @@
 package net.greet.processors;
 
 public class UserInputProcessor {
-	
+
 	public String[] processInput(String userInput) {
 		String command = "";
 		String name = "";
@@ -25,5 +25,5 @@ public class UserInputProcessor {
 		
 		return arr;
 	}
-	
+
 }

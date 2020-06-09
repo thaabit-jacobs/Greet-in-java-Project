@@ -1,7 +1,5 @@
 package net.greet.processors;
 
-import java.sql.SQLException;
-
 import net.greet.commands.Command;
 
 import net.greet.users.User;
@@ -17,7 +15,7 @@ public class CommandsProcessor {
 	}
 	
 	public User getUser(String name) {
-		User user = new User("");
+		User user = new User("user");
 		
 		for(User u: com.getUserList()) {
 			if(u.getUserName().equalsIgnoreCase(name))
@@ -27,7 +25,7 @@ public class CommandsProcessor {
 		return user;
 	}
 	
-	public String processGreet(String name, String language) throws SQLException, ClassNotFoundException{
+	public String processGreet(String name, String language) {
 		DataBaseCommandsProcessor dcp = new DataBaseCommandsProcessor();
 		
 		if(name == "")
@@ -35,10 +33,11 @@ public class CommandsProcessor {
 		
 		for(User u: com.getUserList()) {
 			if(u.getUserName().equalsIgnoreCase(name)) {
-				if(language == "")
+				if(language == "") {
 					return getUser(name).greet();
-				else
+				} else {
 					return getUser(name).greet(language);
+				}
 			} 
 		}
 		
@@ -47,9 +46,9 @@ public class CommandsProcessor {
 		com.getUserList().add(user);
 		
 		if(language == "")
-			return getUser(name).greet();
+			return getUser(user.getUserName()).greet();
 		else
-			return getUser(name).greet(language);
+			return getUser(user.getUserName()).greet(language);
 	}
 	
 	public String processGreeted(String name) {
@@ -65,7 +64,7 @@ public class CommandsProcessor {
 		return "";
 	}
 	
-	public void processClear(String name) throws ClassNotFoundException, SQLException {
+	public void processClear(String name) {
 		
 		if(name == "")
 			com.clear();
@@ -73,26 +72,29 @@ public class CommandsProcessor {
 			com.clear(name);
 	}
 	
-	public void processCommand(String userCommand) throws ClassNotFoundException, SQLException {
+	public void processCommand(String userCommand) {
+		DataBaseCommandsProcessor dcp = new DataBaseCommandsProcessor();
 		UserInputProcessor userinputprocess = new UserInputProcessor();
 		String[] arr = userinputprocess.processInput(userCommand);
 		
-		if(arr[0].equalsIgnoreCase("greet"))
-			processGreet(arr[1], arr[2]);
-		else if(arr[0].equalsIgnoreCase("greeted"))
-			processGreeted(arr[1]);
-		else if(arr[0].equalsIgnoreCase("counter"))
-			System.out.println("number of unique users greeted: " + com.counter());
-		else if(arr[0].equalsIgnoreCase("clear"))
-			processClear(arr[1]);
-		else if(arr[0].equalsIgnoreCase("help"))
-			System.out.println(com.help());
-		else
-			System.out.println("Invalid command"); 
+			if(arr[0].equalsIgnoreCase("greet")) {
+				System.out.println(processGreet(arr[1], arr[2]));
+				dcp.updateDataBase(getUser(arr[1]));
+			}
+			else if(arr[0].equalsIgnoreCase("greeted"))
+				System.out.println(processGreeted(arr[1]));
+			else if(arr[0].equalsIgnoreCase("counter"))
+				System.out.println("number of unique users greeted: " + com.counter());
+			else if(arr[0].equalsIgnoreCase("clear"))
+				processClear(arr[1]);
+			else if(arr[0].equalsIgnoreCase("help"))
+				System.out.println(com.help());
+			else if(arr[0].equalsIgnoreCase("*"))
+				System.out.println(com.languages());
+			else if(arr[0].equalsIgnoreCase("exit"))
+				return;
+			else
+				System.out.println("Invalid command"); 
+	}
 
-	}
-	
-	public Command getCommand() {
-		return com;
-	}
 }

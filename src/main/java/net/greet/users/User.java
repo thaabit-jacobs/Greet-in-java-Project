@@ -12,7 +12,7 @@ public class User {
 	
 	public User(String userName) {
 		
-		this.userName = userName;
+		this.userName = userName.substring(0, 1).toUpperCase() + userName.substring(1, userName.length());
 		
 	}
 	
@@ -48,11 +48,12 @@ public class User {
 		greetCount++;
 		return Language.ENGLISH.getGreeting() + userName;	
 	}
-	
+
 	public String toString() {
 		Formatter f = new Formatter();
 		String s = f.format("%s has been greeted %d time(s)", userName, greetCount).toString();
 		f.close();
 		return s;
 	}
+	
 }

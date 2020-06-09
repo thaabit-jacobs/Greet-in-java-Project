@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="processors.DataBaseCommandsProcessorTest" time="0.741" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="greeter.GreetTest" time="0.256" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="13"/>
     <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
@@ -55,8 +55,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="57.0"/>
   </properties>
-  <testcase name="shouldDeleteRecordFromDataBase" classname="processors.DataBaseCommandsProcessorTest" time="0.706"/>
-  <testcase name="shouldUpdateUserGreetCountInDataBase" classname="processors.DataBaseCommandsProcessorTest" time="0.017"/>
-  <testcase name="shouldAddUserToDataBase" classname="processors.DataBaseCommandsProcessorTest" time="0.006"/>
-  <testcase name="shouldMoveDataFromDbToArrayList" classname="processors.DataBaseCommandsProcessorTest" time="0.007"/>
+  <testcase name="shouldReturnAppsText" classname="greeter.GreetTest" time="0"/>
+  <testcase name="shouldReturnCommandProcessorType" classname="greeter.GreetTest" time="0.254"/>
 </testsuite>

@@ -2,7 +2,6 @@ package processors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -28,7 +27,7 @@ public class CommandsProcessorTest {
 	}
 	
 	@Test
-	void shouldReturnErrorWhenNameGiven() throws ClassNotFoundException, SQLException {
+	void shouldReturnErrorWhenNameGiven() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ul.add(new User("Thaabit"));
 		ul.add(new User("Kauthar"));
@@ -39,7 +38,7 @@ public class CommandsProcessorTest {
 	}
 	
 	@Test
-	void shouldGreetUserWithDefaultLanguage() throws ClassNotFoundException, SQLException {
+	void shouldGreetUserWithDefaultLanguage() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ul.add(new User("Thaabit"));
 		ul.add(new User("Kauthar"));
@@ -50,7 +49,7 @@ public class CommandsProcessorTest {
 	}
 	
 	@Test
-	void shouldGreetUserWithSpecifiedLanguage() throws ClassNotFoundException, SQLException {
+	void shouldGreetUserWithSpecifiedLanguage() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ul.add(new User("Thaabit"));
 		ul.add(new User("Kauthar"));
@@ -73,7 +72,7 @@ public class CommandsProcessorTest {
 	}
 	
 	@Test
-	void shouldReturnTheNumberOfTimesUserGreeted() throws ClassNotFoundException, SQLException {
+	void shouldReturnTheNumberOfTimesUserGreeted() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ul.add(new User("Thaabit"));
 		ul.add(new User("Kauthar"));
@@ -85,7 +84,7 @@ public class CommandsProcessorTest {
 	}
 	
 	@Test
-	void shouldClearAllUsersGreeted() throws ClassNotFoundException, SQLException {
+	void shouldClearAllUsersGreeted() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ul.add(new User("Thaabit"));
 		ul.add(new User("Kauthar"));
@@ -95,11 +94,11 @@ public class CommandsProcessorTest {
 		cp.processGreet("Thaabit", "");
 		cp.processClear("");
 
-		assertEquals(true, com.getUserList().get(0).getUserName().equals("Kauthar"));
+		assertEquals(0, com.getUserList().get(0).getGreetCount());
 	}
 	
 	@Test
-	void shouldClearUserGreetCount() throws ClassNotFoundException, SQLException {
+	void shouldClearUserGreetCount() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ul.add(new User("Thaabit"));
 		ul.add(new User("Kauthar"));

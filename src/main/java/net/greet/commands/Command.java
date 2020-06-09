@@ -1,9 +1,9 @@
 package net.greet.commands;
 
-import java.sql.SQLException;
 import java.util.*;
 
 import net.greet.processors.DataBaseCommandsProcessor;
+
 import net.greet.users.*;
 
 public class Command {
@@ -44,28 +44,33 @@ public class Command {
 		return count;
 	}
 	
-	public void clear() throws ClassNotFoundException, SQLException {
+	public void clear() {
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
-		ListIterator<User> ls = UserList.listIterator();
 		
-		while(ls.hasNext()) {
-			User user = ls.next();
-				if(user.getGreetCount() > 0)
-					ls.remove();
-		}
+		for(User u: UserList)
+			if(u.getGreetCount() > 0)
+				u.setGreetCount();
 		
 		dbcp.deleteGreetedRecordsFromDataBase();
 	}
 	
 	public void clear(String userName) {
+		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
+		
 		for(User u: UserList) {
-			if(u.getUserName().equalsIgnoreCase(userName))
+			if(u.getUserName().equalsIgnoreCase(userName)) {
 				u.setGreetCount();
+				dbcp.updateDataBase(u);
+			}
 		}
 	}
 	
 	public String help() {
-		return "\ngreet   [username] [language] \ngreeted \ngreeted [username] \ncounter \nclear \nclear   [username] \nhelp \nexit";
+		return "\ngreet   [username] [language] \ngreeted \ngreeted [username] \ncounter \nclear \nclear   [username] \n* \nhelp \nexit";
+	}
+	
+	public String languages() {
+		return "\nlanguages \n========= \nENGLISH \nAFRIKAANS \nXHOSA \nZULU \nSPANISH \nJAPANESE \nARABIC \nHINDI \nFRENCH \nRUSSIAN";
 	}
 	
 	public ArrayList<User> getUserList(){
