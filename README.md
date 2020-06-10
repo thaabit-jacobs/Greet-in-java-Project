@@ -1,6 +1,6 @@
 ## Greet-in-java
 
-Greet-in-java project allows you to greet users in a database in 4 different languages.
+Greet-in-java project allows you to greet users in a database in 10 different languages.
 
 ## Build status
 
