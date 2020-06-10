@@ -11,7 +11,7 @@ Greet-in-java project allows you to greet users in a database in 10 different la
 
 In the project diectory run command::
 
-`java -cp target/* net.greet.Greet`
+`java -cp target/* net.greet.main.App`
 
 ## Commands
 
