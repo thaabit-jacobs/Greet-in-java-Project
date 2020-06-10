@@ -11,13 +11,9 @@ Greet-in-java project allows you to greet users in a database in 4 different lan
 
 In the main project diectory run command:
 
-java -cp target/* net.greet.Greet
+`java -cp target/* net.greet.Greet`
 
 ## Commands
-
-In the main project diectory run command:
-
-java -cp target/* net.greet.Greet
 
 - greet &nbsp; &nbsp; &nbsp; &nbsp;[name] [language] (To greet a user)
 
@@ -30,11 +26,9 @@ java -cp target/* net.greet.Greet
 - clear &nbsp; &nbsp; &nbsp; &nbsp; [name]   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;(Sets user's greet count to 0)
 
 - help &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp; (Returns commands)
-<<<<<<< HEAD
-- exit    &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp;(Exit application)
-=======
 
 - exit    &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp;(Exit application)
+
 
 ## Running test
 

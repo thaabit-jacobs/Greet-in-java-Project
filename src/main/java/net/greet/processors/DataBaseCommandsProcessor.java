@@ -100,4 +100,22 @@ public class DataBaseCommandsProcessor {
 		}
 	}
 	
+	public void clearDataBase() {
+		try(Connection con = DriverManager.getConnection(jdbcURL, "sa", "")) { 
+			Class.forName("org.h2.Driver");
+			
+			String updatedb = "DELETE FROM USERS";
+			
+			Statement stmt = con.createStatement();
+			
+			stmt.executeUpdate(updatedb);
+			
+		} catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+		}
+	}
+	
 }

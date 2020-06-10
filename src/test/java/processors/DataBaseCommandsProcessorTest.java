@@ -26,6 +26,8 @@ class DataBaseCommandsProcessorTest {
 		CommandsProcessor cp = new CommandsProcessor(com);
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
 		
+		dbcp.clearDataBase();
+		
 		cp.processGreet("Thaabit", "");
 		
 		ul2 = dbcp.moveDataToList();
@@ -50,6 +52,8 @@ class DataBaseCommandsProcessorTest {
 	@Test
 	void shouldAddUserToDataBase() {
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
+		
+		dbcp.clearDataBase();
 		
 		dbcp.addUserToDataBase(new User("Thaabit"));
 		
@@ -80,6 +84,8 @@ class DataBaseCommandsProcessorTest {
 		ul.add(new User("Thaabit"));
 		Command com = new Command(ul);
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
+		
+		dbcp.clearDataBase();
 		
 		dbcp.addUserToDataBase(com.getUserList().get(0));
 		
@@ -117,6 +123,8 @@ class DataBaseCommandsProcessorTest {
 		ul.add(new User("Thaabit"));
 		Command com = new Command(ul);
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
+		
+		dbcp.clearDataBase();
 		
 		com.getUserList().get(0).greet();
 		dbcp.updateDataBase(com.getUserList().get(0));
