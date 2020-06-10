@@ -34,5 +34,5 @@ In the main project diectory run command::
 
 To run test enter: 
 
-'mvn test'
+`mvn test`
 
