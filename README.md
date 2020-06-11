@@ -9,9 +9,9 @@ Greet-in-java project allows you to greet users in a database in 10 different la
 
 ## Run Greet-in-java
 
-In the main project diectory run command:
+In the project diectory run command::
 
-`java -cp target/* net.greet.Greet`
+`java -cp target/* net.greet.main.App`
 
 ## Commands
 
@@ -21,11 +21,13 @@ In the main project diectory run command:
 
 - greeted &nbsp; &nbsp; [name] &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;   &nbsp; &nbsp;   &nbsp;  	(Returns the number times user has been greeted)
 
-- clear &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;   &nbsp; &nbsp;   &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp; &nbsp;   &nbsp; (Sets all users greet count to 0 that have been greeted)
+- clear &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;   &nbsp; &nbsp;   &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp; &nbsp;   &nbsp; (Deletes users that have been greeted and sets greet count to 0)
 
 - clear &nbsp; &nbsp; &nbsp; &nbsp; [name]   &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;(Sets user's greet count to 0)
 
-- help &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp; (Returns commands)
+- help &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp; (Returns list commands)
+
+- "*" &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; (Returns availible languages)
 
 - exit    &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp;(Exit application)
 
@@ -34,5 +36,5 @@ In the main project diectory run command:
 
 To run test enter: 
 
-mvn test
+`mvn test`
 
