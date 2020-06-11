@@ -118,4 +118,27 @@ public class DataBaseCommandsProcessor {
 		}
 	}
 	
+	public boolean checkIfRecordExists(String n) {
+		boolean recordExist = false;
+		
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "")) { 
+			Class.forName("org.h2.Driver");
+			
+			String recordQuery= "SELECT * FROM USERS WHERE EXISTS (SELECT * FROM USERS WHERE NAME=?);";
+			
+			PreparedStatement pstmt = con.prepareStatement(recordQuery);
+			pstmt.setString(1, n);
+			
+			recordExist = pstmt.executeQuery().next();
+			
+		} catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+		}
+		
+		return recordExist;
+	}
+
 }

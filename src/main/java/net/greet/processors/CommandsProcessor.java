@@ -1,7 +1,6 @@
 package net.greet.processors;
 
 import net.greet.commands.Command;
-
 import net.greet.users.User;
 
 public class CommandsProcessor {
@@ -13,6 +12,7 @@ public class CommandsProcessor {
 		this.com = com;
 		
 	}
+	
 	
 	public User getUser(String name) {
 		User user = new User("user");
@@ -31,15 +31,13 @@ public class CommandsProcessor {
 		if(name == "")
 			return "Must enter name to greet user";
 		
-		for(User u: com.getUserList()) {
-			if(u.getUserName().equalsIgnoreCase(name)) {
+			if(dcp.checkIfRecordExists(name)) {
 				if(language == "") {
 					return getUser(name).greet();
 				} else {
 					return getUser(name).greet(language);
 				}
 			} 
-		}
 		
 		User user = new User(name);
 		dcp.addUserToDataBase(user);

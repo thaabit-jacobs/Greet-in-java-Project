@@ -150,4 +150,12 @@ class DataBaseCommandsProcessorTest {
 
 	}
 	
+	@Test
+	void shouldReturnTrueIfUserExist() {
+		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
+		dbcp.clearDataBase();
+		dbcp.addUserToDataBase(new User("Jone"));
+		assertEquals(true, dbcp.checkIfRecordExists("Jone"));
+	}
+	
 }

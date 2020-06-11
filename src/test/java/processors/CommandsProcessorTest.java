@@ -75,10 +75,9 @@ public class CommandsProcessorTest {
 	void shouldReturnTheNumberOfTimesUserGreeted() {
 		ArrayList<User> ul = new ArrayList<User>();
 		ul.add(new User("Thaabit"));
-		ul.add(new User("Kauthar"));
 		Command com = new Command(ul);
 		CommandsProcessor cp = new CommandsProcessor(com);
-		cp.processGreet("Thaabit", "");
+		ul.get(0).greet();
 		
 		assertEquals(true, cp.processGreeted("Thaabit").equals("Thaabit has been greeted 1 time(s)"));
 	}
