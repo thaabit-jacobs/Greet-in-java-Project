@@ -33,9 +33,11 @@ public class DataBaseCommandsProcessor {
 			
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
 		}
 		
 		return users;
@@ -53,9 +55,11 @@ public class DataBaseCommandsProcessor {
 			
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
 		}
 
 		
@@ -72,9 +76,11 @@ public class DataBaseCommandsProcessor {
 			
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
 		}
 
 
@@ -94,9 +100,11 @@ public class DataBaseCommandsProcessor {
 			pstmt.executeUpdate();
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
 		}
 	}
 	
@@ -112,9 +120,11 @@ public class DataBaseCommandsProcessor {
 			
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
 		}
 	}
 	
@@ -133,9 +143,11 @@ public class DataBaseCommandsProcessor {
 			
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
 		}
 		
 		return recordExist;
