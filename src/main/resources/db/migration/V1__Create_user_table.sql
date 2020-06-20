@@ -1,5 +1,5 @@
 create table USERS (
-    ID int not null,
-    NAME varchar(100) not null,
-    GREET_COUNT int not null
+    ID BIGINT AUTO_INCREMENT NOT NULL,
+    NAME VARCHAR(225),
+    GREET_COUNT BIGINT
 );

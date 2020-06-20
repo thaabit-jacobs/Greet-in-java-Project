@@ -34,7 +34,7 @@ class DataBaseCommandsProcessorTest {
 		
 		assertEquals(true, ul2.get(0).getUserName().equals("Thaabit"));
 		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "")) {
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
 			Class.forName("org.h2.Driver");
 			
 			String deleteRow = "DELETE FROM USERS WHERE ID=1";
@@ -59,7 +59,7 @@ class DataBaseCommandsProcessorTest {
 		
 		dbcp.addUserToDataBase(new User("Thaabit"));
 		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "")) {
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
 			Class.forName("org.h2.Driver");
 			
 			String retrieveTable = "SELECT * FROM USERS";
@@ -100,7 +100,7 @@ class DataBaseCommandsProcessorTest {
 		
 		dbcp.updateDataBase(com.getUserList().get(0));
 		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "")) {
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
 			Class.forName("org.h2.Driver");
 			
 			String retrieveTable = "SELECT * FROM USERS";
@@ -137,7 +137,7 @@ class DataBaseCommandsProcessorTest {
 		
 		dbcp.deleteGreetedRecordsFromDataBase();
 				
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "")) {
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
 			Class.forName("org.h2.Driver");
 			
 			String count = "SELECT COUNT(*) FROM USERS";

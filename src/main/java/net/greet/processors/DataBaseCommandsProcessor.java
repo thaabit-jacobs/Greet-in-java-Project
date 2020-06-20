@@ -12,12 +12,12 @@ import net.greet.users.*;
 
 public class DataBaseCommandsProcessor {
 	
-	final String jdbcURL = "jdbc:h2:file:./target/user_db";
+	final String jdbcURL = "jdbc:h2:file:./target/user_database";
 	
 	public ArrayList<User> moveDataToList() {
 		ArrayList<User> users = new ArrayList<User>();
 		
-		try(Connection con = DriverManager.getConnection(jdbcURL, "sa", "")) {
+		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) {
 			Class.forName("org.h2.Driver");
 			
 			Statement stmt = con.createStatement();
@@ -44,13 +44,12 @@ public class DataBaseCommandsProcessor {
 	}
 	
 	public void addUserToDataBase(User u) {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "sa", "")) { 
+		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
-			String updateDataBase = "INSERT INTO USERS (ID, NAME, GREET_COUNT) VALUES(?, ?, 0)";
-			PreparedStatement pstmt = con.prepareStatement(updateDataBase);
-			pstmt.setInt(1, moveDataToList().size() + 1);
-			pstmt.setString(2, u.getUserName());
+			String sqlInsert = "INSERT INTO USERS(NAME, GREET_COUNT) VALUES(?, 0)";
+			PreparedStatement pstmt = con.prepareStatement(sqlInsert);
+			pstmt.setString(1, u.getUserName());
 			pstmt.executeUpdate();
 			
 		} catch(ClassNotFoundException cne) {
@@ -66,7 +65,7 @@ public class DataBaseCommandsProcessor {
 	}
 	
 	public void deleteGreetedRecordsFromDataBase() {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "sa", "")) { 
+		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
 			String deleteRow = "DELETE FROM USERS WHERE GREET_COUNT>0";
@@ -87,7 +86,7 @@ public class DataBaseCommandsProcessor {
 	}
 	
 	public void updateDataBase(User u) {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "sa", "")) { 
+		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
 			String updatedb = "UPDATE USERS SET GREET_COUNT=? WHERE NAME=?";
@@ -109,7 +108,7 @@ public class DataBaseCommandsProcessor {
 	}
 	
 	public void clearDataBase() {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "sa", "")) { 
+		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
 			String updatedb = "DELETE FROM USERS";
@@ -131,7 +130,7 @@ public class DataBaseCommandsProcessor {
 	public boolean checkIfRecordExists(String n) {
 		boolean recordExist = false;
 		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_db", "sa", "")) { 
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
 			String recordQuery= "SELECT * FROM USERS WHERE EXISTS (SELECT * FROM USERS WHERE NAME=?);";

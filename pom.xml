@@ -24,8 +24,9 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.4.3</version>
                 <configuration>
-                    <url>jdbc:h2:file:./target/user_db</url>
-                    <user>sa</user>
+                    <url>jdbc:h2:file:./target/user_database</url>
+                    <user>admin</user>
+                    <password>1234</password>
                 </configuration>
                 <dependencies>
                     <dependency>
