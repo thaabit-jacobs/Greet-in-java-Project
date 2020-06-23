@@ -1,4 +1,4 @@
-package net.greet.main;
+package net.greet;
 
 import java.sql.SQLException;
 

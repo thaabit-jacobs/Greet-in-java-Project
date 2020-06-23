@@ -50,7 +50,7 @@ public class CommandsProcessor {
 	}
 	
 	public String processGreeted(String name) {
-		
+		/*
 		if(com.counter() == 0) {
 			return "No users have been greeted";
 		} else if(name == "") {
@@ -58,9 +58,9 @@ public class CommandsProcessor {
 				System.out.println(u);
 		} else
 			return com.greeted(name);
-		
+		*/
 		return "";
-	}
+	} 
 	
 	public void processClear(String name) {
 		

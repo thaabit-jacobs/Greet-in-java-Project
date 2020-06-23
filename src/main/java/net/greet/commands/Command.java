@@ -16,14 +16,14 @@ public class Command {
 		
 	}
 	
-	public ArrayList<User> greeted() {
+	public String greeted() {
 		ArrayList<User> greetedUsers = new ArrayList<User>();
 		
 		for(User u: UserList)
 			if(u.getGreetCount() > 0)
 				greetedUsers.add(u);
 		
-		return greetedUsers;
+		return greetedUsers.toString();
 	}
 	
 	public String greeted(String userName) {
@@ -34,17 +34,17 @@ public class Command {
 		return "";
 	}
 	
-	public int counter() {
+	public String counter() {
 		int count = 0;
 		
 		for(User u: UserList)
 			if(u.getGreetCount() > 0)
 				count++;
 		
-		return count;
+		return "The number of unique user(s) greeted: " + count;
 	}
 	
-	public void clear() {
+	public String clear() {
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
 		
 		for(User u: UserList)
@@ -52,17 +52,23 @@ public class Command {
 				u.setGreetCount();
 		
 		dbcp.deleteGreetedRecordsFromDataBase();
+		
+		return "All users have been cleared";
 	}
 	
-	public void clear(String userName) {
+	public String clear(String userName) {
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
-		
+		String userCleared = "";
+				
 		for(User u: UserList) {
 			if(u.getUserName().equalsIgnoreCase(userName)) {
 				u.setGreetCount();
 				dbcp.updateDataBase(u);
+				userCleared = u.getUserName();
 			}
 		}
+		
+		return userCleared + " has been cleared";
 	}
 	
 	public String help() {

@@ -15,14 +15,25 @@ class CommandTest {
 	void shouldReturnListOfGreetedUsers() {
 		ArrayList<User> users = new ArrayList<User>();
 		users.add(new User("John"));
-		users.add(new User("Sarah"));
-		users.add(new User("Mbuyi"));
 		
 		Command com = new Command(users);
+		
 		users.get(0).greet();
-		users.get(2).greet();
-		assertEquals(true, com.greeted().get(1).getUserName().equalsIgnoreCase("Mbuyi"));
+
+		assertEquals(true, com.greeted().equalsIgnoreCase("[John has been greeted 1 time(s)]"));
 	}
+	
+	void shouldReturnTheUserGreetCount() {
+		ArrayList<User> users = new ArrayList<User>();
+		users.add(new User("John"));
+		
+		Command com = new Command(users);
+		
+		users.get(0).greet();
+
+		assertEquals(true, com.greeted("Mbuyi").equalsIgnoreCase("Mbuyi has been greeted 1 time(s)"));
+	}
+	
 	
 	@Test
 	void shouldDisplayTheNumOfTimesUserGreeted() {
@@ -50,7 +61,7 @@ class CommandTest {
 		users.get(0).greet();
 		users.get(1).greet();
 		
-		assertEquals(2, com.counter());
+		assertEquals(true, com.counter().equalsIgnoreCase("The number of unique user(s) greeted: 2" ));
 	}
 	
 	
@@ -65,9 +76,7 @@ class CommandTest {
 		users.get(0).greet();
 		users.get(1).greet();
 		
-		com.clear();
-		
-		assertEquals(0, com.getUserList().get(0).getGreetCount());
+		assertEquals(true, com.clear().equalsIgnoreCase("All users have been cleared"));
 	}
 	
 	@Test
@@ -78,9 +87,7 @@ class CommandTest {
 		Command com = new Command(users);
 		users.get(0).greet();
 		
-		com.clear("Mbuyi");
-		
-		assertEquals(0, users.get(0).getGreetCount());
+		assertEquals(true, com.clear("Mbuyi").equalsIgnoreCase("Mbuyi has been cleared"));
 	}
 	
 }
