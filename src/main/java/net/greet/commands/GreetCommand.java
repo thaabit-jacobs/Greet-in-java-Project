@@ -8,10 +8,10 @@ public class GreetCommand extends Command{
 	
 	public String execute(Context context) {
 		try {
-			if(context.getNameEntered() == null) {
+			if(context.getNameEntered().equalsIgnoreCase(" ")) {
 				return "Must greet a user";
 				
-		} else if(context.getLanguageEntered() == null) {
+		} else if(context.getLanguageEntered().equalsIgnoreCase(" ")) {
 			return new User(context.getNameEntered()).greet();
 			
 		} else {

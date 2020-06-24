@@ -21,15 +21,17 @@ public class Context {
 		
 		if(firstSpace == -1) {
 			this.command = userInput;
+			this.name = " ";
+			this.language = " ";
 			
 		} else if((firstSpace != -1 && secondSpace != -1) && firstSpace == secondSpace) {
 			this.command = userInput.substring(0, firstSpace);
 			this.name = userInput.substring(firstSpace + 1);
+			this.language = " ";
 			
 		} else if((firstSpace != -1 && secondSpace != -1) && firstSpace != secondSpace) {
 			this.command = userInput.substring(0, firstSpace);
 			this.name = userInput.substring(firstSpace + 1, secondSpace);
-			
 			this.language = userInput.substring(secondSpace + 1);
 		}
 		
