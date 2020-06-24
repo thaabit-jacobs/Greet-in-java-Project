@@ -1,16 +1,34 @@
 package net.greet;
 
-import java.sql.SQLException;
+import java.util.*;
 
-import net.greet.greeter.Greet;
+import net.greet.commands.*;
+import net.greet.processors.user_input.Context;
 
 public class App {
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		Greet greet = new Greet();
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		Map<String, Command> commandMap = new HashMap<>();
+		commandMap.put("greet", new GreetCommand());
+		commandMap.put("greeted", new GreetedCommand());
+		commandMap.put("clear", new ClearCommand());
+		commandMap.put("counter", new CounterCommand());
+		commandMap.put("help", new HelpCommand());
+		commandMap.put("*", new LanguageCommand());
 		
-		System.out.println(greet.appText());
-		greet.runMainAppLoop();
+		while(true) {
+			System.out.print("\n");
+			System.out.print("Enter command: ");
+			String userInput = sc.nextLine();
+			
+			if(userInput.equalsIgnoreCase("exit"))
+				return;
+			
+			Context context = new Context(userInput);
+			Command command = commandMap.get(context.getCommandEntered());
+			String result = command.execute(context);
+			System.out.println(result);
+		}
 	}
-
 }

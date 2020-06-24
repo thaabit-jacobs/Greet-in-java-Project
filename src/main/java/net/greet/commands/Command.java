@@ -1,6 +1,7 @@
 package net.greet.commands;
 
 import net.greet.processors.database_processors.DataBaseCommandsProcessor;
+import net.greet.processors.user_input.Context;
 
 public class Command {
 	
@@ -45,5 +46,9 @@ public class Command {
 	
 	public String languages() {
 		return "\nlanguages \n========= \nENGLISH \nAFRIKAANS \nXHOSA \nZULU \nSPANISH \nJAPANESE \nARABIC \nHINDI \nFRENCH \nRUSSIAN";
+	}
+	
+	public String execute(Context context) {
+		return "Executing command";
 	}
 }

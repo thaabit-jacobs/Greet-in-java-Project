@@ -75,7 +75,7 @@ public class DataBaseCommandsProcessor {
 			
 			PreparedStatement pstmt = con.prepareStatement(updatedb);
 			
-			pstmt.setInt(1, greetCount);
+			pstmt.setInt(1, ++greetCount);
 			pstmt.setString(2, name);
 			pstmt.executeUpdate();
 			

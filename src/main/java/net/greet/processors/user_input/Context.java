@@ -38,17 +38,17 @@ public class Context {
 	}
 	
 	public String getCommandEntered() {
-		return this.command;
+		return this.command.toLowerCase();
 	}
 	
 	public String getNameEntered() throws NameNotFoundException {
 		if(this.name.equals(""))
 			throw new NameNotFoundException("User not found");
 		
-		return this.name;
+		return this.name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 	}
 	
 	public String getLanguageEntered() {
-		return language;
+		return language.toLowerCase();
 	}
 }
