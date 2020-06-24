@@ -8,6 +8,10 @@ public class GreetedCommand extends Command {
 	public String execute(Context context) {
 		try {
 			if(context.getNameEntered().equalsIgnoreCase(" ")) {
+				if(this.greeted().equalsIgnoreCase("[]")) {
+					return "No users have been greeted";
+				}
+				
 				return this.greeted();
 				
 			} else {

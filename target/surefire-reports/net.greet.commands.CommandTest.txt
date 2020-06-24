@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: net.greet.commands.CommandTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.281 s - in net.greet.commands.CommandTest

@@ -1,4 +1,4 @@
-package user;
+package net.greet.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import net.greet.users.*;

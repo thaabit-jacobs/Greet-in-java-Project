@@ -1,4 +1,4 @@
-package greet_languages;
+package net.greet.greet_languages;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -3,6 +3,7 @@ package net.greet;
 import java.util.*;
 
 import net.greet.commands.*;
+import net.greet.exceptions.CommandNotFoundException;
 import net.greet.processors.user_input.Context;
 
 public class App {
@@ -25,10 +26,16 @@ public class App {
 			if(userInput.equalsIgnoreCase("exit"))
 				return;
 			
-			Context context = new Context(userInput);
-			Command command = commandMap.get(context.getCommandEntered());
-			String result = command.execute(context);
-			System.out.println(result);
+			try {
+				Context context = new Context(userInput);
+				Command command = commandMap.get(context.getCommandEntered());
+				String result = command.execute(context);
+				System.out.println(result);
+				
+			} catch(CommandNotFoundException ce) {
+				System.out.println("Command not found");
+			}
+
 		}
 	}
 }

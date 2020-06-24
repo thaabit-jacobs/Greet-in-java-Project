@@ -21,7 +21,7 @@ class CounterCommandTest {
 		john.greet();
 		sarah.greet();
 		
-		assertEquals(true, cc.execute(context).equalsIgnoreCase("The number of unique user(s) greeted: 0"));
+		assertEquals(true, cc.execute(context).equalsIgnoreCase("The number of unique net.greet.user(s) greeted: 0"));
 		
 		db.clearDataBase();
 	}

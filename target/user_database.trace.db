@@ -678,3 +678,19 @@ DELETE FROM TEST WHERE NAME=2 [42102-200]
 2020-06-24 19:29:38 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TEST" not found; SQL statement:
 DELETE FROM TEST WHERE NAME='Thaabit' [42102-200]
+2020-06-24 20:14:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-199]
+2020-06-24 20:16:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-199]
+2020-06-24 20:18:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-199]
+2020-06-24 20:19:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-199]
+2020-06-24 20:20:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-199]
+2020-06-24 20:22:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-199]
+2020-06-24 20:58:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-199]
+2020-06-24 21:00:14 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: No data is available [2000-199]

@@ -1,8 +1,6 @@
-package commands;
+package net.greet.commands;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
@@ -62,7 +60,7 @@ class CommandTest {
 		
 		Command com = new Command();
 
-		assertEquals(true, com.counter().equalsIgnoreCase("The number of unique user(s) greeted: 2"));
+		assertEquals(true, com.counter().equalsIgnoreCase("The number of unique net.greet.user(s) greeted: 2"));
 		
 		dbcp.clearDataBase();
 	}
@@ -84,7 +82,7 @@ class CommandTest {
 		
 		dbcp.clearDataBase();
 		
-		assertEquals(true, com.counter().equalsIgnoreCase("The number of unique user(s) greeted: 0"));
+		assertEquals(true, com.counter().equalsIgnoreCase("The number of unique net.greet.user(s) greeted: 0"));
 	}
 	
 	@Test
@@ -101,7 +99,7 @@ class CommandTest {
 		
 		dbcp.clearUserDataBase("John");
 		
-		assertEquals(true, com.counter().equalsIgnoreCase("The number of unique user(s) greeted: 0"));
+		assertEquals(true, com.counter().equalsIgnoreCase("The number of unique net.greet.user(s) greeted: 0"));
 		
 		dbcp.clearDataBase();
 	}

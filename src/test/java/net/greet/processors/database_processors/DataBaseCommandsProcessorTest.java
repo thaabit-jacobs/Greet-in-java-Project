@@ -1,4 +1,4 @@
-package processors;
+package net.greet.processors.database_processors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,12 +7,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import net.greet.commands.Command;
-import net.greet.processors.database_processors.*;
 import net.greet.users.*;
 
 class DataBaseCommandsProcessorTest {
@@ -37,6 +34,7 @@ class DataBaseCommandsProcessorTest {
 			
 			String deleteRow = "DELETE FROM USERS WHERE ID=1";
 			stmt.executeUpdate(deleteRow);
+			dbcp.clearDataBase();
 			
 		}  catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
@@ -69,7 +67,7 @@ class DataBaseCommandsProcessorTest {
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
 			
-			assertEquals(3, rs.getInt("GREET_COUNT"));
+			assertEquals(4, rs.getInt("GREET_COUNT"));
 			
 			dbcp.clearDataBase();
 			
@@ -159,7 +157,6 @@ class DataBaseCommandsProcessorTest {
 		john.greet();
 		
 		dbcp.addUserToDataBase(john);
-		dbcp.updateDataBase("John");
 			
 		assertEquals(true, dbcp.queryGreetedUsers().toString().equalsIgnoreCase("[John has been greeted 1 time(s)]"));
 			
@@ -175,7 +172,6 @@ class DataBaseCommandsProcessorTest {
 		john.greet();
 		
 		dbcp.addUserToDataBase(john);
-		dbcp.updateDataBase("John");
 			
 		assertEquals(true, dbcp.queryGreetedUser("John").equalsIgnoreCase("John has been greeted 1 time(s)"));
 			

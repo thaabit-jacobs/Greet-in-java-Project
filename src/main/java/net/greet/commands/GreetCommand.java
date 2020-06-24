@@ -10,7 +10,7 @@ public class GreetCommand extends Command{
 	public String execute(Context context) {
 		try {
 			if(context.getNameEntered().equalsIgnoreCase(" ")) {
-				return "Must greet a user";
+				return "Must greet a net.greet.user";
 				
 		} else if(context.getLanguageEntered().equalsIgnoreCase(" ")) {
 			DataBaseCommandsProcessor db = new DataBaseCommandsProcessor();

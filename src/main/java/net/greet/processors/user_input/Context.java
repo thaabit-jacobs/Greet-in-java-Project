@@ -1,5 +1,6 @@
 package net.greet.processors.user_input;
 
+import net.greet.exceptions.CommandNotFoundException;
 import net.greet.exceptions.NameNotFoundException;
 
 public class Context {
@@ -37,13 +38,16 @@ public class Context {
 		
 	}
 	
-	public String getCommandEntered() {
+	public String getCommandEntered() throws CommandNotFoundException {
+		if(!this.command.equalsIgnoreCase("*") && this.command.length() < 4)
+			throw new CommandNotFoundException();
+		
 		return this.command.toLowerCase();
 	}
 	
 	public String getNameEntered() throws NameNotFoundException {
 		if(this.name.equals(""))
-			throw new NameNotFoundException("User not found");
+			throw new NameNotFoundException();
 		
 		return this.name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 	}

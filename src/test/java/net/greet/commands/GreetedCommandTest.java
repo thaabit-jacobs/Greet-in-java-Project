@@ -15,6 +15,8 @@ class GreetedCommandTest {
 		Context context = new Context("greeted");
 		GreetedCommand gc = new GreetedCommand();
 		DataBaseCommandsProcessor db = new DataBaseCommandsProcessor();
+		db.clearDataBase();
+		
 		User john = new User("John");
 		
 		john.greet();
@@ -31,6 +33,8 @@ class GreetedCommandTest {
 		Context context = new Context("greeted John");
 		GreetedCommand gc = new GreetedCommand();
 		DataBaseCommandsProcessor db = new DataBaseCommandsProcessor();
+		db.clearDataBase();
+		
 		User john = new User("John");
 		
 		john.greet();

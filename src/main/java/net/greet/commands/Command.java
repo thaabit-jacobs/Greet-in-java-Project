@@ -24,7 +24,7 @@ public class Command {
 	}
 	
 	public String counter() {
-		return "The number of unique user(s) greeted: " + dbcp.countGreetedUsers();
+		return "The number of unique net.greet.user(s) greeted: " + dbcp.countGreetedUsers();
 		
 	}
 	
