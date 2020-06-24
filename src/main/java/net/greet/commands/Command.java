@@ -1,9 +1,6 @@
 package net.greet.commands;
 
-import java.util.*;
-
 import net.greet.processors.database_processors.DataBaseCommandsProcessor;
-import net.greet.users.*;
 
 public class Command {
 	

@@ -16,39 +16,6 @@ import net.greet.processors.database_processors.*;
 import net.greet.users.*;
 
 class DataBaseCommandsProcessorTest {
-	/*
-	@Test
-	void shouldMoveDataFromDbToArrayList() {
-		ArrayList<User> ul = new ArrayList<User>();
-		ArrayList<User> ul2 = new ArrayList<User>();
-		Command com = new Command(ul);
-		CommandsProcessor cp = new CommandsProcessor(com);
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
-		
-		dbcp.clearDataBase();
-		
-		cp.processGreet("Thaabit", "");
-		
-		ul2 = dbcp.moveDataToList();
-		
-		assertEquals(true, ul2.get(0).getUserName().equals("Thaabit"));
-		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
-			Class.forName("org.h2.Driver");
-			
-			String deleteRow = "DELETE FROM USERS WHERE ID=1";
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(deleteRow);
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
-			
-		} catch (SQLException se) {
-			System.out.println(se + " : Sql query issues or database");
-			se.printStackTrace();
-		} 
-	}
 	
 	@Test
 	void shouldAddUserToDataBase() {
@@ -83,21 +50,16 @@ class DataBaseCommandsProcessorTest {
 	
 	@Test
 	void shouldUpdateUserGreetCountInDataBase() {
-		ArrayList<User> ul = new ArrayList<User>();
-		ul.add(new User("Thaabit"));
-		Command com = new Command(ul);
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
-		
 		dbcp.clearDataBase();
 		
-		dbcp.addUserToDataBase(com.getUserList().get(0));
+		User john = new User("John");
+		john.greet();
+		john.greet();
+		john.greet();
 		
-		com.getUserList().get(0).greet();
-		com.getUserList().get(0).greet();
-		com.getUserList().get(0).greet();
-		com.getUserList().get(0).greet();
-		
-		dbcp.updateDataBase(com.getUserList().get(0));
+		dbcp.addUserToDataBase(john);
+		dbcp.updateDataBase("John");
 		
 		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
 			Class.forName("org.h2.Driver");
@@ -107,10 +69,9 @@ class DataBaseCommandsProcessorTest {
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
 			
-			assertEquals(4, rs.getInt("GREET_COUNT"));
+			assertEquals(3, rs.getInt("GREET_COUNT"));
 			
-			String deleteRow = "DELETE FROM USERS WHERE ID=1";
-			stmt.executeUpdate(deleteRow);
+			dbcp.clearDataBase();
 			
 		}  catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
@@ -123,29 +84,62 @@ class DataBaseCommandsProcessorTest {
 	}
 	
 	@Test
-	void shouldDeleteRecordFromDataBase() {
-		ArrayList<User> ul = new ArrayList<User>();
-		ul.add(new User("Thaabit"));
-		Command com = new Command(ul);
+	void shouldReturnTheCountOfUsersGreeted() {
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
-		
 		dbcp.clearDataBase();
 		
-		com.getUserList().get(0).greet();
-		dbcp.updateDataBase(com.getUserList().get(0));
+		User john = new User("John");
+		john.greet();
 		
-		dbcp.deleteGreetedRecordsFromDataBase();
-				
+		dbcp.addUserToDataBase(john);
+		dbcp.updateDataBase("John");
+		
 		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
 			Class.forName("org.h2.Driver");
 			
-			String count = "SELECT COUNT(*) FROM USERS";
+			String retrieveTable = "SELECT COUNT(*) FROM USERS WHERE GREET_COUNT>0";
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(count);
+			ResultSet rs = stmt.executeQuery(retrieveTable);
+			rs.next();
+			
+			assertEquals(1, rs.getInt(1));
+			
+			dbcp.clearDataBase();
+			
+		}  catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
+		}
+	}
+	
+	@Test
+	void shouldDeleteGreetedRecordsFromDb() {
+		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
+		dbcp.clearDataBase();
+		
+		User john = new User("John");
+		john.greet();
+		
+		dbcp.addUserToDataBase(john);
+		dbcp.updateDataBase("John");
+		dbcp.deleteGreetedRecordsFromDataBase();
+		
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
+			Class.forName("org.h2.Driver");
+			
+			String retrieveTable = "SELECT * FROM USERS";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
 			
 			assertEquals(0, rs.getInt(1));
 			
+			dbcp.clearDataBase();
+			
 		}  catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
 			cne.printStackTrace();
@@ -154,28 +148,54 @@ class DataBaseCommandsProcessorTest {
 			System.out.println(se + " : Sql query issues or database");
 			se.printStackTrace();
 		}
-
 	}
 	
 	@Test
-	void shouldReturnTrueIfUserExist() {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
+	void shouldReturnListGreetedUsers() {
+		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
 		dbcp.clearDataBase();
-		dbcp.addUserToDataBase(new User("Jone"));
-		assertEquals(true, dbcp.checkIfRecordExists("Jone"));
-	} */
+		
+		User john = new User("John");
+		john.greet();
+		
+		dbcp.addUserToDataBase(john);
+		dbcp.updateDataBase("John");
+			
+		assertEquals(true, dbcp.queryGreetedUsers().toString().equalsIgnoreCase("[John has been greeted 1 time(s)]"));
+			
+		dbcp.clearDataBase();
+	}
 	
 	@Test
-	void shouldReturnTheNumberOfUsersGreeted() {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
+	void shouldReturnGreetedUsers() {
+		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
 		dbcp.clearDataBase();
 		
-		User jone = new User("Jone");
-		jone.greet();
+		User john = new User("John");
+		john.greet();
 		
-		dbcp.addUserToDataBase(jone);
+		dbcp.addUserToDataBase(john);
+		dbcp.updateDataBase("John");
+			
+		assertEquals(true, dbcp.queryGreetedUser("John").equalsIgnoreCase("John has been greeted 1 time(s)"));
+			
+		dbcp.clearDataBase();
+	}
+	
+	@Test
+	void shouldReturnUserDoesNotExistForInvalidUserName() {
+		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
+		dbcp.clearDataBase();
 		
-		assertEquals(1, dbcp.countGreetedUsers());
+		User john = new User("John");
+		john.greet();
+		
+		dbcp.addUserToDataBase(john);
+		dbcp.updateDataBase("John");
+			
+		assertEquals(true, dbcp.queryGreetedUser("Mike").equalsIgnoreCase("User does not exist"));
+			
+		dbcp.clearDataBase();
 	}
 	
 }

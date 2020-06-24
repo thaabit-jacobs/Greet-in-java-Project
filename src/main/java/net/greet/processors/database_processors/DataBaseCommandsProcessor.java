@@ -61,22 +61,24 @@ public class DataBaseCommandsProcessor {
 		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
-			String getUserQuery = "SELECT * FROM USERS WHERE NAME=?";
-			String updatedb = "UPDATE USERS SET GREET_COUNT=? WHERE NAME=?";
+			String getUser = "SELECT * FROM USERS WHERE NAME=?";
 			
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(getUserQuery);
+			PreparedStatement pstmt1 = con.prepareStatement(getUser);
+			pstmt1.setString(1, name);
 			
-			PreparedStatement pstmt = con.prepareStatement(updatedb);
-			
+			ResultSet rs = pstmt1.executeQuery();
 			rs.next();
 			
 			int greetCount = rs.getInt("GREET_COUNT");
 			
-			pstmt.setInt(1, ++greetCount);
-			pstmt.setString(2, name);
+			String updatedb = "UPDATE USERS SET GREET_COUNT=? WHERE NAME=?";
 			
+			PreparedStatement pstmt = con.prepareStatement(updatedb);
+			
+			pstmt.setInt(1, greetCount);
+			pstmt.setString(2, name);
 			pstmt.executeUpdate();
+			
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
 			cne.printStackTrace();

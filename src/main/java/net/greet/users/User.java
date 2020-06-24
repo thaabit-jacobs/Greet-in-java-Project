@@ -12,7 +12,7 @@ public class User {
 	
 	public User(String userName) {
 		
-		this.userName = userName.substring(0, 1).toUpperCase() + userName.substring(1).toLowerCase();
+		this.userName = userName;
 		
 	}
 	

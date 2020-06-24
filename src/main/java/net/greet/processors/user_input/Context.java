@@ -12,7 +12,7 @@ public class Context {
 	
 	private String language;
 	
-	public Context(String userInput) throws NameNotFoundException {
+	public Context(String userInput) {
 		
 		this.userInput = userInput;
 		
@@ -20,36 +20,33 @@ public class Context {
 		int secondSpace = this.userInput.lastIndexOf(" ");
 		
 		if(firstSpace == -1) {
-			this.command = this.userInput;
+			this.command = userInput;
 			
-		} else if(firstSpace != -1 && (firstSpace == secondSpace)) {
-			this.command = this.userInput.substring(0, firstSpace);
-			this.name = this.userInput.substring(firstSpace + 1);
+		} else if((firstSpace != -1 && secondSpace != -1) && firstSpace == secondSpace) {
+			this.command = userInput.substring(0, firstSpace);
+			this.name = userInput.substring(firstSpace + 1);
 			
-			if(this.name.equals(""))
-				throw new NameNotFoundException("User name not found");
+		} else if((firstSpace != -1 && secondSpace != -1) && firstSpace != secondSpace) {
+			this.command = userInput.substring(0, firstSpace);
+			this.name = userInput.substring(firstSpace + 1, secondSpace);
 			
-			this.name = this.name.substring(0, 1).toUpperCase() + this.name.substring(1).toLowerCase();
-			
-		} else {
-			this.command = this.userInput.substring(0, firstSpace);
-			this.name = this.userInput.substring(firstSpace + 1, secondSpace);		
-			this.name = this.name.substring(0, 1).toUpperCase() + this.name.substring(1).toLowerCase();
-			this.language = this.userInput.substring(secondSpace + 1);
+			this.language = userInput.substring(secondSpace + 1);
 		}
 		
 	}
 	
 	public String getCommandEntered() {
-		return command;
+		return this.command;
 	}
 	
-	public String getNameEntered() {
-		return name;
+	public String getNameEntered() throws NameNotFoundException {
+		if(this.name.equals(""))
+			throw new NameNotFoundException("User not found");
+		
+		return this.name;
 	}
 	
 	public String getLanguageEntered() {
 		return language;
 	}
-
 }
