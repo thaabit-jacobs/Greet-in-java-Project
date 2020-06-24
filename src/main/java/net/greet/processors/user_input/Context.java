@@ -1,4 +1,4 @@
-package net.greet.processors;
+package net.greet.processors.user_input;
 
 import net.greet.exceptions.NameNotFoundException;
 
@@ -40,15 +40,15 @@ public class Context {
 		
 	}
 	
-	public String getCommand() {
+	public String getCommandEntered() {
 		return command;
 	}
 	
-	public String getName() {
+	public String getNameEntered() {
 		return name;
 	}
 	
-	public String getLanguage() {
+	public String getLanguageEntered() {
 		return language;
 	}
 

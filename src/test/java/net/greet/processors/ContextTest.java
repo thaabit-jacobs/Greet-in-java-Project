@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import net.greet.exceptions.NameNotFoundException;
+import net.greet.processors.user_input.Context;
 
 class ContextTest {
 
@@ -12,7 +13,7 @@ class ContextTest {
 	void shouldReturnTheCommandInUserInput() {
 		try {
 			Context context = new Context("clear");
-			assertEquals(true, context.getCommand().equals("clear"));
+			assertEquals(true, context.getCommandEntered().equals("clear"));
 			
 		} catch(NameNotFoundException nfe) {
 			System.out.print("User name not found");
@@ -23,7 +24,7 @@ class ContextTest {
 	void shouldReturnTheUserNameInUserInput() {
 		try {
 			Context context = new Context("greeted Thaabit");
-			assertEquals(true, context.getName().equals("Thaabit"));
+			assertEquals(true, context.getNameEntered().equals("Thaabit"));
 			
 		} catch(NameNotFoundException nfe) {
 			System.out.print("User name not found");
@@ -34,7 +35,7 @@ class ContextTest {
 	void shouldReturnTheLanguageInUserInput() {
 		try {
 			Context context = new Context("greet Thaabit Afrikaans");
-			assertEquals(true, context.getLanguage().equals("Afrikaans"));
+			assertEquals(true, context.getLanguageEntered().equals("Afrikaans"));
 			
 		} catch(NameNotFoundException nfe) {
 			System.out.print("User name not found");

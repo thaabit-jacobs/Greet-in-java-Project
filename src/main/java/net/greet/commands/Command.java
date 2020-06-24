@@ -2,73 +2,44 @@ package net.greet.commands;
 
 import java.util.*;
 
-import net.greet.processors.DataBaseCommandsProcessor;
-
+import net.greet.processors.database_processors.DataBaseCommandsProcessor;
 import net.greet.users.*;
 
 public class Command {
 	
-	private ArrayList<User> UserList;
+	private DataBaseCommandsProcessor dbcp;
 	
-	public Command(ArrayList<User> UserList) {
+	public Command() {
 		
-		this.UserList = UserList;
+		dbcp = new DataBaseCommandsProcessor();
 		
 	}
 	
 	public String greeted() {
-		ArrayList<User> greetedUsers = new ArrayList<User>();
+		return dbcp.queryGreetedUsers().toString();
 		
-		for(User u: UserList)
-			if(u.getGreetCount() > 0)
-				greetedUsers.add(u);
-		
-		return greetedUsers.toString();
 	}
 	
 	public String greeted(String userName) {
-		for(User u: UserList)
-			if(u.getUserName().equalsIgnoreCase(userName))
-				return u.toString();
+		return dbcp.queryGreetedUser(userName);
 		
-		return "";
 	}
 	
 	public String counter() {
-		int count = 0;
+		return "The number of unique user(s) greeted: " + dbcp.countGreetedUsers();
 		
-		for(User u: UserList)
-			if(u.getGreetCount() > 0)
-				count++;
-		
-		return "The number of unique user(s) greeted: " + count;
 	}
 	
 	public String clear() {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
-		
-		for(User u: UserList)
-			if(u.getGreetCount() > 0)
-				u.setGreetCount();
-		
-		dbcp.deleteGreetedRecordsFromDataBase();
+		this.dbcp.deleteGreetedRecordsFromDataBase();
 		
 		return "All users have been cleared";
 	}
 	
 	public String clear(String userName) {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
-		String userCleared = "";
-				
-		for(User u: UserList) {
-			if(u.getUserName().equalsIgnoreCase(userName)) {
-				u.setGreetCount();
-				dbcp.updateDataBase(u);
-				userCleared = u.getUserName();
-			}
-		}
+		this.dbcp.clearUserDataBase(userName);
 		
-		return userCleared + " has been cleared";
+		return userName + " has been cleared";
 	}
 	
 	public String help() {
@@ -78,9 +49,4 @@ public class Command {
 	public String languages() {
 		return "\nlanguages \n========= \nENGLISH \nAFRIKAANS \nXHOSA \nZULU \nSPANISH \nJAPANESE \nARABIC \nHINDI \nFRENCH \nRUSSIAN";
 	}
-	
-	public ArrayList<User> getUserList(){
-		return UserList;
-	}
-
 }

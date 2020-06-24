@@ -12,12 +12,11 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import net.greet.commands.Command;
-import net.greet.processors.CommandsProcessor;
-import net.greet.processors.DataBaseCommandsProcessor;
+import net.greet.processors.database_processors.*;
 import net.greet.users.*;
 
 class DataBaseCommandsProcessorTest {
-
+	/*
 	@Test
 	void shouldMoveDataFromDbToArrayList() {
 		ArrayList<User> ul = new ArrayList<User>();
@@ -164,6 +163,19 @@ class DataBaseCommandsProcessorTest {
 		dbcp.clearDataBase();
 		dbcp.addUserToDataBase(new User("Jone"));
 		assertEquals(true, dbcp.checkIfRecordExists("Jone"));
+	} */
+	
+	@Test
+	void shouldReturnTheNumberOfUsersGreeted() {
+		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
+		dbcp.clearDataBase();
+		
+		User jone = new User("Jone");
+		jone.greet();
+		
+		dbcp.addUserToDataBase(jone);
+		
+		assertEquals(1, dbcp.countGreetedUsers());
 	}
 	
 }
