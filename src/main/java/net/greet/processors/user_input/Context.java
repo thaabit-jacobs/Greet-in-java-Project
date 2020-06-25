@@ -39,7 +39,7 @@ public class Context {
 	}
 	
 	public String getCommandEntered() throws CommandNotFoundException {
-		if(!this.command.equalsIgnoreCase("*") && this.command.length() < 4)
+		if(!this.command.equalsIgnoreCase("*") && !this.command.equalsIgnoreCase("greet") && !this.command.equalsIgnoreCase("greeted") && !this.command.equalsIgnoreCase("clear") && !this.command.equalsIgnoreCase("counter") && !this.command.equalsIgnoreCase("help"))
 			throw new CommandNotFoundException();
 		
 		return this.command.toLowerCase();

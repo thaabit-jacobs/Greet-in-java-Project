@@ -237,5 +237,33 @@ public class DataBaseCommandsProcessor {
 		
 		return "User does not exist";
 	}
+	
+	public int getUserGreetCount(String name) {
+		int greetCount = 0;
+		
+		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) { 
+			Class.forName("org.h2.Driver");
+			
+			String userGreetCountQuery = "SELECT * FROM USERS WHERE NAME=?;";
+			
+			PreparedStatement ps = con.prepareStatement(userGreetCountQuery);
+			ps.setString(1,  name);
+			
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			
+			greetCount = rs.getInt("GREET_COUNT");
+		
+		} catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
+		}
+		
+		return greetCount;
+	}
 
 }

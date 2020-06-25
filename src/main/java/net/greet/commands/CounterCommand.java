@@ -1,11 +1,13 @@
 package net.greet.commands;
 
+import net.greet.processors.database_processors.DataBaseCommandsProcessor;
 import net.greet.processors.user_input.Context;
 
-public class CounterCommand extends Command {
+public class CounterCommand implements Command {
 	
 	public String execute(Context context) {
-		return this.counter();
+		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
+		return "The number of unique user(s) greeted: " + dbcp.countGreetedUsers();
 	}
 
 }

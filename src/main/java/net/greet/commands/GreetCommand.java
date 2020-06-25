@@ -5,12 +5,12 @@ import net.greet.processors.database_processors.DataBaseCommandsProcessor;
 import net.greet.processors.user_input.Context;
 import net.greet.users.User;
 
-public class GreetCommand extends Command{
+public class GreetCommand implements Command{
 
 	public String execute(Context context) {
 		try {
 			if(context.getNameEntered().equalsIgnoreCase(" ")) {
-				return "Must greet a net.greet.user";
+				return "User not found";
 				
 		} else if(context.getLanguageEntered().equalsIgnoreCase(" ")) {
 			DataBaseCommandsProcessor db = new DataBaseCommandsProcessor();

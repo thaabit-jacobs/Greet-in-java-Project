@@ -46,6 +46,7 @@ public class User {
 			}  
 		
 		greetCount++;
+		System.out.println("Language not found");
 		return Language.ENGLISH.getGreeting() + userName;	
 	}
 
