@@ -17,14 +17,13 @@ public class App {
 		commandMap.put("counter", new CounterCommand());
 		commandMap.put("help", new HelpCommand());
 		commandMap.put("*", new LanguageCommand());
+		commandMap.put("exit", new ExitCommand());
 		
 		while(true) {
 			System.out.print("\n");
 			System.out.print("Enter command: ");
-			String userInput = sc.nextLine();
 			
-			if(userInput.equalsIgnoreCase("exit"))
-				return;
+			String userInput = sc.nextLine();
 			
 			try {
 				Context context = new Context(userInput);
@@ -32,10 +31,12 @@ public class App {
 				String result = command.execute(context);
 				System.out.println(result);
 				
+				if(context.getCommandEntered().equalsIgnoreCase("exit"))
+					break;
+				
 			} catch(CommandNotFoundException ce) {
 				System.out.println("Command not found");
 			}
-
 		}
 	}
 }
