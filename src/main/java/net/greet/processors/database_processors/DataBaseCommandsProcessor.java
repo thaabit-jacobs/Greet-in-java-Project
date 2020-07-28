@@ -13,13 +13,22 @@ import net.greet.users.*;
 public class DataBaseCommandsProcessor {
 	
 	final String jdbcURL = "jdbc:h2:file:./target/user_database";
-	
+	final String addUserSql = "INSERT INTO USERS(NAME, GREET_COUNT) VALUES(?, ?)";
+	final String deleteUserSql = "DELETE FROM USERS WHERE GREET_COUNT>0";
+	final String getUserSql = "SELECT * FROM USERS WHERE NAME=?";
+	final String updatedbSql = "DELETE FROM USERS";
+	final String updatedbSql2 = "UPDATE USERS SET GREET_COUNT=? WHERE NAME=?";
+	final String recordQuery= "SELECT * FROM USERS WHERE EXISTS (SELECT * FROM USERS WHERE NAME=?);";
+
+	private PreparedStatement pstmt;
+	private Statement stmt;
+
 	public void addUserToDataBase(User u) {
 		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
-			String sqlInsert = "INSERT INTO USERS(NAME, GREET_COUNT) VALUES(?, ?)";
-			PreparedStatement pstmt = con.prepareStatement(sqlInsert);
+			pstmt = con.prepareStatement(addUserSql);
+
 			pstmt.setString(1, u.getUserName());
 			pstmt.setInt(2, u.getGreetCount());
 			pstmt.executeUpdate();
@@ -32,18 +41,15 @@ public class DataBaseCommandsProcessor {
 			System.out.println(se + " : Sql query issues or database");
 			se.printStackTrace();
 		}
-
-		
 	}
 	
 	public void deleteGreetedRecordsFromDataBase() {
 		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
-			String deleteRow = "DELETE FROM USERS WHERE GREET_COUNT>0";
-			Statement stmt = con.createStatement();
+			stmt = con.createStatement();
 			
-			stmt.executeUpdate(deleteRow);
+			stmt.executeUpdate(deleteUserSql);
 			
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
@@ -61,9 +67,7 @@ public class DataBaseCommandsProcessor {
 		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
-			String getUser = "SELECT * FROM USERS WHERE NAME=?";
-			
-			PreparedStatement pstmt1 = con.prepareStatement(getUser);
+			PreparedStatement pstmt1 = con.prepareStatement(getUserSql);
 			pstmt1.setString(1, name);
 			
 			ResultSet rs = pstmt1.executeQuery();
@@ -73,7 +77,7 @@ public class DataBaseCommandsProcessor {
 			
 			String updatedb = "UPDATE USERS SET GREET_COUNT=? WHERE NAME=?";
 			
-			PreparedStatement pstmt = con.prepareStatement(updatedb);
+			pstmt = con.prepareStatement(updatedb);
 			
 			pstmt.setInt(1, ++greetCount);
 			pstmt.setString(2, name);
@@ -93,11 +97,9 @@ public class DataBaseCommandsProcessor {
 		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
-			String updatedb = "DELETE FROM USERS";
+			stmt = con.createStatement();
 			
-			Statement stmt = con.createStatement();
-			
-			stmt.executeUpdate(updatedb);
+			stmt.executeUpdate(updatedbSql);
 			
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
@@ -113,9 +115,7 @@ public class DataBaseCommandsProcessor {
 		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
-			String updatedb = "UPDATE USERS SET GREET_COUNT=? WHERE NAME=?";
-			
-			PreparedStatement pstmt = con.prepareStatement(updatedb);
+			pstmt = con.prepareStatement(updatedbSql2);
 			pstmt.setInt(1, 0);
 			pstmt.setString(2, name);
 			pstmt.executeUpdate();
@@ -136,9 +136,7 @@ public class DataBaseCommandsProcessor {
 		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
 			
-			String recordQuery= "SELECT * FROM USERS WHERE EXISTS (SELECT * FROM USERS WHERE NAME=?);";
-			
-			PreparedStatement pstmt = con.prepareStatement(recordQuery);
+			pstmt = con.prepareStatement(recordQuery);
 			pstmt.setString(1, n);
 			
 			recordExist = pstmt.executeQuery().next();
