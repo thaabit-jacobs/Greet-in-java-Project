@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    
+    <div class="options">
+        <div class="option-container">
+            <a href="/greeted" class="greeted-link">greeted</a><br />
+        </div>
+        <div class="option-container">
+            <a href="/counter" class="counter-link">counter</a><br />
+        </div>
+        <div class="option-container">
+            <a href="/clear" class="clear-link">clear</a><br />
+        </div>
+        <div class="option-container">
+            <a href="/languages" class="lang-link">languages</a><br />
+        </div>
+    </div>
+
+    <div class="greet-container">
+        <h1>Greet Web App</h1>
+        <p id="greeting-output">{{greeting}}</p>
+        <form action="/" method="get">
+            <input type="text" id="username" name="username">
+            <p id="example">"enter user name:"</p>
+            <button type="submit" value="Submit">greet</button>
+        </form>
+    </div>
+
+
+</body>
+
+</html>

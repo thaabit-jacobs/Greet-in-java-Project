@@ -23,7 +23,6 @@ public class GreetedCommand implements Command {
 			
 		} catch (NameNotFoundException e) {
 			return "User not found";
-			
 		}
 	}
 	
