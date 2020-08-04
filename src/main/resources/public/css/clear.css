@@ -5,9 +5,67 @@ body
     text-align: center;
 }
 
+#form-con
+{   
+    text-align: center;
+    float: right;
+    margin-right: 28em;
+}
+
+a{
+    text-decoration: none;
+    color: rgba(160, 155, 155, 0.698);
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
 p
 {
     color: rgba(160, 155, 155, 0.698);
     font-weight: bold;
     font-size: 3em;
+}
+
+#form-con
+{   
+    text-align: center;
+    float: right;
+    margin-right: 28em;
+}
+
+#example
+{
+    color: gray;
+    font-weight: bold;
+    font-size: 0.8em;
+    margin-top: 0.5em;
+}
+
+button
+{
+    background-color: rgba(160, 155, 155, 0.698);
+    border: none;
+    width: 25%;
+    color: white;
+    font-weight: normal;
+    padding: 0.2em 0;
+    border-radius: .5em;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+
+button:hover
+{
+    background-color: rgba(110, 109, 109, 0.698);
+    font-weight: bold;
+}
+
+input
+{
+    border: 1px solid rgba(179, 179, 179, 0.322);
+    width: 25%;
+    padding: 0.5em;
+    border-radius: .5em;
+    margin-top: 0.8em;
+    box-sizing: border-box;
 }

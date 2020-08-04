@@ -5,6 +5,13 @@ body
     text-align: center;
 }
 
+a{
+    text-decoration: none;
+    color: rgba(160, 155, 155, 0.698);
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
 p
 {
     color: rgba(160, 155, 155, 0.698);

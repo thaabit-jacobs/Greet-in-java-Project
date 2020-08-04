@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/language.css">
+    <link rel="stylesheet" href="/css/language.css">
 </head>
 
 <body>
+    <a href="/">Home</a>
+
     <form action="/" method="get">
 
         {{#each lang}}
         <ul>
             <input type="radio" id={{this}} name="language" value={{this}}>
-
             <label for="male">{{this}}</label><br>
         </ul>
         {{/each}}
-
 
         <button type="submit" value="Submit">select</button>
     </form>

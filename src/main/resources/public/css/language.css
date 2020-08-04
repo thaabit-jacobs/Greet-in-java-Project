@@ -11,6 +11,14 @@ body
    
 }
 
+a{
+    padding-left: 1.5em;
+    text-decoration: none;
+    color: rgba(160, 155, 155, 0.698);
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
 button
 {
     background-color: rgba(160, 155, 155, 0.698);

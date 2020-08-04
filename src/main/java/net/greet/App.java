@@ -3,6 +3,7 @@ package net.greet;
 import java.util.*;
 import java.util.Map;
 
+import org.h2.engine.GeneratedKeysMode;
 import org.h2.value.ValueShort;
 
 import net.greet.commands.Command;
@@ -20,7 +21,9 @@ import static spark.Spark.*;
 
 public class App 
 {
-	public static String render(Map<String, String> model, String hbsPath)
+	public static String selectedLanguage;
+
+	public static String render(Map<Object, Object> model, String hbsPath)
 	{
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, hbsPath));
 	}
@@ -28,53 +31,79 @@ public class App
 	public static void main(String[] args) 
 	{
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
-		
-		new GreetCommand().execute(new Context("greet Kauthar"));
-		new GreetCommand().execute(new Context("greet Orrie"));
 
 		staticFiles.location("/public");
 
 		post("/", (request, response) -> {
-			Map<String, String> model = new HashMap<>();
-			model.put("greeting", "");
+			Map<String, Object> model = new HashMap<>();
+			String name = request.queryParams("username");
 
-			return render(model, "greet.hbs");
+			
+			String greeting  = new GreetCommand().execute(new Context("greet " + name  + " " + selectedLanguage));
+
+			model.put("greeting", greeting);
+			model.put("count", dbcp.countGreetedUsers());
+
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greet.hbs"));
 		});
 
 		get("/", (request, response) -> {
-			Map<String, String> model = new HashMap<>();
+			Map<String, Object> model = new HashMap<>();
 			model.put("greeting", "");
+			model.put("count", dbcp.countGreetedUsers());
 
-			return render(model, "greet.hbs");
-		});
+			selectedLanguage = request.queryParams("language");
+			System.out.println(selectedLanguage);
 
-		get("/greet/:name", (request, response) -> {
-			Map<String, String> model = new HashMap<>();
-			String greetingUser = new GreetCommand().execute(new Context("greet " + request.params(":name")));
-
-			model.put("greeting", greetingUser);
-
-			return render(model, "greet.hbs");
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greet.hbs"));
 		});
 
 		get("/greeted", (request, response) -> {
-			Map<String, ArrayList<String>> model = new HashMap<>();
+			Map<String, Object> model = new HashMap<>();
 			
 			ArrayList<String> greetedUsers= dbcp.queryGreetedUsers();
+
+			if(greetedUsers.size() == 0)
+			{
+				greetedUsers.add("No users have been greeted");
+				model.put("greeted", greetedUsers);
+
+				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greeted.hbs"));
+			}
 
 			model.put("greeted", greetedUsers);
 
 			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greeted.hbs"));
 		});
 
-		get("/greeted/:name", (request, response) -> {
-			Map<String, String> model = new HashMap<>();
-			
-			String greetedUsers = dbcp.queryGreetedUser(request.params(":name"));
+		post("/greeted", (request, response) -> {
+			Map<String, Object> model = new HashMap<>();
+			ArrayList<String> greetedUsers = new ArrayList<>();
+
+			String userGreeted = request.queryParams("greetedUser");
+			userGreeted = userGreeted.trim();
+
+			if(userGreeted.equals("*")){
+				greetedUsers = dbcp.queryGreetedUsers();
+
+				if(greetedUsers.size() == 0)
+				{
+					greetedUsers.add("No users have been greeted");
+					model.put("greeted", greetedUsers);
+	
+					return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greeted.hbs"));
+				}
+	
+				model.put("greeted", greetedUsers);
+	
+				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greeted.hbs"));
+			}
+
+			greetedUsers.add(dbcp.queryGreetedUser(userGreeted));
 
 			model.put("greeted", greetedUsers);
 
-			return render(model, "greeted-user.hbs");
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greeted.hbs"));
 		});
 
 		get("/counter", (request, response) -> {
@@ -84,7 +113,7 @@ public class App
 
 			model.put("count", countRes);
 
-			return render(model, "counter.hbs");
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "counter.hbs"));
 		});
 
 		get("/languages", (request, response) -> {
@@ -102,29 +131,39 @@ public class App
 		});
 
 		get("/clear", (request, response) -> {
-			Map<String, String> model = new HashMap<>();
+			Map<String, Object> model = new HashMap<>();
 
-			dbcp.clearDataBase();
+			//dbcp.clearDataBase();
 
-			model.put("clear", "All users cleared from database");
+			model.put("clear", "");
 
-			return render(model, "clear.hbs");
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "clear.hbs"));
 		});
 
-		get("/clear/:name", (request, response) -> {
-			Map<String, String> model = new HashMap<>();
+		post("/clear", (request, response) -> {
+			Map<String, Object> model = new HashMap<>();
 
-			String clearRs = "";
+			String userCleared = request.queryParams("userCleared");
+			userCleared = userCleared.trim();
 
-			if(dbcp.checkIfRecordExists(request.params(":name"))) {
-				dbcp.clearUserDataBase(request.params(":name"));
-				clearRs = request.params(":name") + " has been cleared";
-			} else
-				clearRs = request.params(":name") + " has not been greeted";
+			if(userCleared.equals("*")) {
+				dbcp.clearDataBase();
 
-			model.put("clear", clearRs);
+				model.put("clear", "All users cleared");
 
-			return render(model, "clear.hbs");
+				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "clear.hbs"));
+			}
+
+			String clearMsg = "User has not been greeted";
+
+			if(dbcp.checkIfRecordExists(userCleared)){
+				dbcp.clearUserDataBase(userCleared);
+				clearMsg = userCleared + " has been removed";
+			}
+
+			model.put("clear", clearMsg);
+
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "clear.hbs"));
 		});
 	}
 }
