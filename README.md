@@ -9,7 +9,6 @@ Greet-in-java project allows you to greet users in a database in 10 different la
 
 ## Run Greet-in-java
 
-In the project diectory run command:
 Run application in your IDE to start the server once started navigate to the below address:
 
 `http://localhost:4567/`
