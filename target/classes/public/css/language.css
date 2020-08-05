@@ -1,40 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 body
 {
     text-align: center;
-    margin: 1em 3em;
-    font-family: 'Montserrat', sans-serif;
-    color: rgba(160, 155, 155, 0.698);
-    font-weight: bold;
-    font-size: 1.5em;
-   
+}
+.navbar-brand {
+    padding-top: 0.125rem;
+    padding-bottom: .125rem;
+    margin: 0.125em 0.5em;
 }
 
-a{
-    padding-left: 1.5em;
-    text-decoration: none;
-    color: rgba(160, 155, 155, 0.698);
-    font-weight: bold;
-    font-size: 1.5em;
-}
-
-button
+nav
 {
-    background-color: rgba(160, 155, 155, 0.698);
-    border: none;
+    height: 65px;    
+}
+
+#nav-container
+{
+    display: inline-block;
+    text-align: center;
+}
+
+ul
+{
+    margin: 1em;
+}
+
+label
+{
+    margin: 0 0.25em;
+}
+
+.btn-lg
+{
     width: 8em;
-    color: white;
-    font-weight: normal;
-    padding: 0.2em 0;
-    margin: 0 16em;
-    border-radius: .5em;
-    font-size: 1.3em;
-    cursor: pointer;
-}
-
-button:hover
-{
-    background-color: rgba(110, 109, 109, 0.698);
-    font-weight: bold;
 }

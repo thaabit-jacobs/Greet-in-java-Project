@@ -15,17 +15,16 @@ nav
     text-align: center;
 }
 
-#display
+#main-container
 {
     text-align: center;
 }
 
-#clear-output
+form
 {
-    color: #7b92a7;
     margin-top: 1em;
-    font-weight: bold;
-    font-size: 1.5em;
+    margin-bottom: 1.5em;
+    color: #7b92a7;
 }
 
 #example
@@ -35,7 +34,28 @@ nav
     margin-top: 0.2em;
 }
 
+#greeting-output
+{
+    color: #7b92a7;
+    margin-top: 1em;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
 .btn-lg
 {
     width: 8em;
 }
+
+.badge
+{
+    color: #84bef3;
+}
+
+a
+{
+    display: inline-block;
+    margin: 0.5em 0.5em;
+}
+
+

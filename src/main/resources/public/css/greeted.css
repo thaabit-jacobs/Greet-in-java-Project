@@ -1,63 +1,41 @@
-#form-con
-{   
+.navbar-brand {
+    padding-top: 0.125rem;
+    padding-bottom: .125rem;
+    margin: 0.125em 0.5em;
+}
+
+nav
+{
+    height: 65px;    
+}
+
+#nav-container
+{
+    display: inline-block;
     text-align: center;
-    float: right;
-    margin-right: 28em;
 }
 
-#example
-{
-    color: gray;
-    font-weight: bold;
-    font-size: 0.8em;
-    margin-top: 0.5em;
-}
-
-button
-{
-    background-color: rgba(160, 155, 155, 0.698);
-    border: none;
-    width: 25%;
-    color: white;
-    font-weight: normal;
-    padding: 0.2em 0;
-    border-radius: .5em;
-    font-size: 1.3em;
-    cursor: pointer;
-}
-
-button:hover
-{
-    background-color: rgba(110, 109, 109, 0.698);
-    font-weight: bold;
-}
-
-input
-{
-    border: 1px solid rgba(179, 179, 179, 0.322);
-    width: 25%;
-    padding: 0.5em;
-    border-radius: .5em;
-    margin-top: 0.8em;
-    box-sizing: border-box;
-}
-
-body
+#display
 {
     text-align: center;
 }
 
-#link{
-    text-decoration: none;
-    color: rgba(160, 155, 155, 0.698);
+#greeted-output
+{
+    color: #7b92a7;
+    margin-top: 1em;
     font-weight: bold;
     font-size: 1.5em;
 }
 
-.greeted-dis
+#example
 {
-    color: rgba(160, 155, 155, 0.698);
-    font-weight: bold;
-    font-size: 3em;
+    font-style: italic;
+    font-size: 0.5em;
+    margin-top: 0.2em;
 }
 
+.btn-lg
+{
+    width: 8em;
+}

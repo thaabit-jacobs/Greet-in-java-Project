@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/css/greeted.css">
-    <title>Greeted User</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Greet Web App</title>
 </head>
 
 <body>
@@ -26,20 +26,28 @@
         </div>
     </nav>
 
-    <div class="container" id="display">
-        <p>
-            {{#each greeted}}
-            <ul>
-                <p id="greeted-output">{{this}}</p>
-            </ul>
-            {{/each}}
-        </p>
-        <form action="/greeted" method="POST">
-            <input type="text" id="greetedUser" name="greetedUser">
-            <p id="example">"enter user name or * all users"</p>
-            <button class="btn btn-secondary btn-lg" type="submit" value="Submit">greeted</button>
-        </form>
+    <div class="container" id="main-container">
+        <div class="container" id="display">
+            <p id="greeting-output">{{greeting}}</p>
+            <form action="/" method="POST">
+                <input type="text" id="username" name="username">
+                <p id="example">"enter user name:"</p>
+                <button class="btn btn-secondary btn-lg" type="submit" value="Submit">greet</button>
+            </form>
+        </div>
+
+        <div class="container" id="options">
+            <a class="btn btn-outline-secondary" href="/greeted" class="greeted-link">greeted</a>
+
+            <a class="btn btn-outline-secondary" href="/counter" class="counter-link">counter <span
+                    class="badge badge-light">{{count}}</span></a>
+
+            <a class="btn btn-outline-secondary" href="/clear" class="clear-link">clear</a>
+
+            <a class="btn btn-outline-secondary" href="/languages" class="lang-link">languages</a>
+        </div>
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

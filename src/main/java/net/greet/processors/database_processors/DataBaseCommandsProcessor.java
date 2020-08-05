@@ -114,6 +114,8 @@ public class DataBaseCommandsProcessor {
 	public void clearUserDataBase(String name) {
 		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
 			Class.forName("org.h2.Driver");
+
+			name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 			
 			pstmt = con.prepareStatement(updatedbSql2);
 			pstmt.setInt(1, 0);
@@ -132,6 +134,8 @@ public class DataBaseCommandsProcessor {
 	
 	public boolean checkIfRecordExists(String n) {
 		boolean recordExist = false;
+		
+		n = n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase(); 
 		
 		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) { 
 			Class.forName("org.h2.Driver");

@@ -23,6 +23,14 @@ public class App
 {
 	public static String selectedLanguage;
 
+	static int getHerokuAssignedPort() {
+		ProcessBuilder processBuilder = new ProcessBuilder();
+		if (processBuilder.environment().get("PORT") != null) {
+			return Integer.parseInt(processBuilder.environment().get("PORT"));
+		}
+		return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+	}    
+
 	public static String render(Map<Object, Object> model, String hbsPath)
 	{
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, hbsPath));
@@ -30,9 +38,11 @@ public class App
 	
 	public static void main(String[] args) 
 	{
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
+		port(getHerokuAssignedPort());
 
 		staticFiles.location("/public");
+		
+		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
 
 		post("/", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
@@ -44,18 +54,18 @@ public class App
 			model.put("greeting", greeting);
 			model.put("count", dbcp.countGreetedUsers());
 
-			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greet.hbs"));
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
 		});
 
 		get("/", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
-			model.put("greeting", "");
+			model.put("greeting", "Greet Web App");
 			model.put("count", dbcp.countGreetedUsers());
 
 			selectedLanguage = request.queryParams("language");
 			System.out.println(selectedLanguage);
 
-			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greet.hbs"));
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
 		});
 
 		get("/greeted", (request, response) -> {
@@ -97,6 +107,12 @@ public class App
 				model.put("greeted", greetedUsers);
 	
 				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greeted.hbs"));
+			} else if(userGreeted.equals("")) 
+			{
+				greetedUsers.add("Invalid command entered");
+				model.put("greeted", greetedUsers);
+
+				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greeted.hbs"));
 			}
 
 			greetedUsers.add(dbcp.queryGreetedUser(userGreeted));
@@ -111,7 +127,7 @@ public class App
 
 			String countRes = "The number of unique user(s) greeted: " + dbcp.countGreetedUsers();
 
-			model.put("count", countRes);
+			model.put("counter", countRes);
 
 			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "counter.hbs"));
 		});
@@ -127,13 +143,11 @@ public class App
 
 			model.put("lang", lang);
 
-			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "languages.hbs"));
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "language.hbs"));
 		});
 
 		get("/clear", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
-
-			//dbcp.clearDataBase();
 
 			model.put("clear", "");
 
@@ -152,6 +166,12 @@ public class App
 				model.put("clear", "All users cleared");
 
 				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "clear.hbs"));
+			} else if(userCleared.equals("")) 
+			{
+				userCleared = "Invalid command entered";
+				model.put("greeted", userCleared);
+
+				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greeted.hbs"));
 			}
 
 			String clearMsg = "User has not been greeted";

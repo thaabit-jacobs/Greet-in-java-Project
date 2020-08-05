@@ -20,22 +20,10 @@ nav
     text-align: center;
 }
 
-#clear-output
+#counter-output
 {
     color: #7b92a7;
     margin-top: 1em;
     font-weight: bold;
     font-size: 1.5em;
-}
-
-#example
-{
-    font-style: italic;
-    font-size: 0.5em;
-    margin-top: 0.2em;
-}
-
-.btn-lg
-{
-    width: 8em;
 }
