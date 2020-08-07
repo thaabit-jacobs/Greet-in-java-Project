@@ -9,7 +9,7 @@ import net.greet.processors.user_input.Context;
 import net.greet.users.User;
 
 class CounterCommandTest {
-
+/*
 	@Test
 	void shouldReturnCountUsersGreeted() {
 		DataBaseCommandsProcessor db = new DataBaseCommandsProcessor();
@@ -25,6 +25,7 @@ class CounterCommandTest {
 		
 		db.clearDataBase();
 	}
+	*/
 }
 
 

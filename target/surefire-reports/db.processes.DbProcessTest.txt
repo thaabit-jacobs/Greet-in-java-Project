@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: db.processes.DbProcessTest
--------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.063 s - in db.processes.DbProcessTest

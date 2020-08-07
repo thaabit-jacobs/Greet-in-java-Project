@@ -149,7 +149,7 @@ public class App
 		get("/clear", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
 
-			model.put("clear", "");
+			model.put("clear", " ");
 
 			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "clear.hbs"));
 		});
@@ -166,7 +166,7 @@ public class App
 				model.put("clear", "All users cleared");
 
 				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "clear.hbs"));
-			} else if(userCleared.equals("")) 
+			} else if(userCleared.equals(" ")) 
 			{
 				userCleared = "Invalid command entered";
 				model.put("greeted", userCleared);

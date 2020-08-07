@@ -1,0 +1,41 @@
+.navbar-brand {
+    padding-top: 0.125rem;
+    padding-bottom: .125rem;
+    margin: 0.125em 0.5em;
+}
+
+nav
+{
+    height: 65px;    
+}
+
+#nav-container
+{
+    display: inline-block;
+    text-align: center;
+}
+
+#display
+{
+    text-align: center;
+}
+
+#clear-output
+{
+    color: #7b92a7;
+    margin-top: 1em;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+#example
+{
+    font-style: italic;
+    font-size: 0.5em;
+    margin-top: 0.2em;
+}
+
+.btn-lg
+{
+    width: 8em;
+}

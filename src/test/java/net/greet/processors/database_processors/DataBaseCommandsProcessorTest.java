@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import net.greet.users.*;
 
 class DataBaseCommandsProcessorTest {
-	
+/*
 	@Test
 	void shouldAddUserToDataBase() {
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
@@ -193,5 +193,6 @@ class DataBaseCommandsProcessorTest {
 			
 		dbcp.clearDataBase();
 	}
+	*/
 	
 }

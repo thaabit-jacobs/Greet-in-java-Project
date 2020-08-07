@@ -9,7 +9,7 @@ import net.greet.processors.user_input.Context;
 import net.greet.users.User;
 
 class GreetedCommandTest {
-
+/*
 	@Test
 	void shouldReturnListOfGreetedUsrs() {
 		Context context = new Context("greeted");
@@ -45,5 +45,6 @@ class GreetedCommandTest {
 		
 		db.clearDataBase();
 	}
+	*/
 
 }
