@@ -28,7 +28,6 @@
                     <user>admin</user>
                     <password>1234</password>
                 </configuration>
-
             </plugin>
 
             <plugin>

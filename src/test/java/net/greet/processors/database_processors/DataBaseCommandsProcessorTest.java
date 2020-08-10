@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import net.greet.users.*;
 
 class DataBaseCommandsProcessorTest {
-/*
+
 	@Test
 	void shouldAddUserToDataBase() {
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
@@ -22,18 +22,16 @@ class DataBaseCommandsProcessorTest {
 		
 		dbcp.addUserToDataBase(new User("Thaabit"));
 		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
-			Class.forName("org.h2.Driver");
+		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98")) {
+			Class.forName("org.postgresql.Driver");
 			
 			String retrieveTable = "SELECT * FROM USERS";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
 			
-			assertEquals(true, rs.getString("NAME").equals("Thaabit"));
+			assertEquals("Thaabit", rs.getString("USER_NAME"));
 			
-			String deleteRow = "DELETE FROM USERS WHERE ID=1";
-			stmt.executeUpdate(deleteRow);
 			dbcp.clearDataBase();
 			
 		}  catch(ClassNotFoundException cne) {
@@ -45,6 +43,7 @@ class DataBaseCommandsProcessorTest {
 			se.printStackTrace();
 		}  
 	}
+	
 	
 	@Test
 	void shouldUpdateUserGreetCountInDataBase() {
@@ -59,15 +58,15 @@ class DataBaseCommandsProcessorTest {
 		dbcp.addUserToDataBase(john);
 		dbcp.updateDataBase("John");
 		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
-			Class.forName("org.h2.Driver");
+		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98")) {
+			Class.forName("org.postgresql.Driver");
 			
 			String retrieveTable = "SELECT * FROM USERS";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
 			
-			assertEquals(4, rs.getInt("GREET_COUNT"));
+			assertEquals(4, rs.getInt("COUNT"));
 			
 			dbcp.clearDataBase();
 			
@@ -81,6 +80,7 @@ class DataBaseCommandsProcessorTest {
 		}
 	}
 	
+	
 	@Test
 	void shouldReturnTheCountOfUsersGreeted() {
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
@@ -92,10 +92,10 @@ class DataBaseCommandsProcessorTest {
 		dbcp.addUserToDataBase(john);
 		dbcp.updateDataBase("John");
 		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
-			Class.forName("org.h2.Driver");
+		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98")) {
+			Class.forName("org.postgresql.Driver");
 			
-			String retrieveTable = "SELECT COUNT(*) FROM USERS WHERE GREET_COUNT>0";
+			String retrieveTable = "SELECT COUNT(*) FROM USERS WHERE COUNT>0";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
@@ -113,41 +113,7 @@ class DataBaseCommandsProcessorTest {
 			se.printStackTrace();
 		}
 	}
-	
-	@Test
-	void shouldDeleteGreetedRecordsFromDb() {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
-		dbcp.clearDataBase();
 		
-		User john = new User("John");
-		john.greet();
-		
-		dbcp.addUserToDataBase(john);
-		dbcp.updateDataBase("John");
-		dbcp.deleteGreetedRecordsFromDataBase();
-		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) {
-			Class.forName("org.h2.Driver");
-			
-			String retrieveTable = "SELECT * FROM USERS";
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(retrieveTable);
-			rs.next();
-			
-			assertEquals(0, rs.getInt(1));
-			
-			dbcp.clearDataBase();
-			
-		}  catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
-			
-		} catch (SQLException se) {
-			System.out.println(se + " : Sql query issues or database");
-			se.printStackTrace();
-		}
-	}
-	
 	@Test
 	void shouldReturnListGreetedUsers() {
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
@@ -158,7 +124,7 @@ class DataBaseCommandsProcessorTest {
 		
 		dbcp.addUserToDataBase(john);
 			
-		assertEquals(true, dbcp.queryGreetedUsers().toString().equalsIgnoreCase("[John has been greeted 1 time(s)]"));
+		assertEquals(true, dbcp.getAllGreetedUsers().toString().equalsIgnoreCase("[John has been greeted 1 time(s)]"));
 			
 		dbcp.clearDataBase();
 	}
@@ -193,6 +159,6 @@ class DataBaseCommandsProcessorTest {
 			
 		dbcp.clearDataBase();
 	}
-	*/
+	
 	
 }

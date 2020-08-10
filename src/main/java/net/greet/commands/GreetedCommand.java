@@ -11,11 +11,11 @@ public class GreetedCommand implements Command {
 		
 		try {
 			if(context.getNameEntered().equalsIgnoreCase(" ")) {
-				if(dbcp.queryGreetedUsers().toString().equalsIgnoreCase("[]")) {
+				if(dbcp.getAllGreetedUsers().toString().equalsIgnoreCase("[]")) {
 					return "No users have been greeted";
 				}
 				
-				return dbcp.queryGreetedUsers().toString();
+				return dbcp.getAllGreetedUsers().toString();
 				
 			} else {
 				return dbcp.queryGreetedUser(context.getNameEntered());

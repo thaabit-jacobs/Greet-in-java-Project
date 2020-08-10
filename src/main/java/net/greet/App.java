@@ -3,9 +3,6 @@ package net.greet;
 import java.util.*;
 import java.util.Map;
 
-import org.h2.engine.GeneratedKeysMode;
-import org.h2.value.ValueShort;
-
 import net.greet.commands.Command;
 import net.greet.commands.CounterCommand;
 import net.greet.commands.GreetCommand;
@@ -71,7 +68,7 @@ public class App
 		get("/greeted", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
 			
-			ArrayList<String> greetedUsers= dbcp.queryGreetedUsers();
+			ArrayList<String> greetedUsers= dbcp.getAllGreetedUsers();
 
 			if(greetedUsers.size() == 0)
 			{
@@ -94,7 +91,7 @@ public class App
 			userGreeted = userGreeted.trim();
 
 			if(userGreeted.equals("*")){
-				greetedUsers = dbcp.queryGreetedUsers();
+				greetedUsers = dbcp.getAllGreetedUsers();
 
 				if(greetedUsers.size() == 0)
 				{

@@ -12,76 +12,29 @@ import net.greet.users.*;
 
 public class DataBaseCommandsProcessor {
 	
-	final String jdbcURL = "jdbc:h2:file:./target/user_database";
-	final String addUserSql = "INSERT INTO USERS(NAME, GREET_COUNT) VALUES(?, ?)";
-	final String deleteUserSql = "DELETE FROM USERS WHERE GREET_COUNT>0";
-	final String getUserSql = "SELECT * FROM USERS WHERE NAME=?";
-	final String updatedbSql = "DELETE FROM USERS";
-	final String updatedbSql2 = "UPDATE USERS SET GREET_COUNT=? WHERE NAME=?";
-	final String recordQuery= "SELECT * FROM USERS WHERE EXISTS (SELECT * FROM USERS WHERE NAME=?);";
+	final String jdbcURL = "jdbc:postgresql://localhost:5432/greeter";
+	final String addUserSql = "INSERT INTO users(USER_NAME, COUNT) VALUES(?, ?)";
+	final String deleteUserSql = "DELETE FROM users WHERE COUNT>0";
+	final String getUserSql = "SELECT * FROM users WHERE USER_NAME=?";
+	final String cleardbSql = "DELETE FROM users";
+	final String updatedbSql2 = "UPDATE users SET COUNT=? WHERE USER_NAME=?";
+	final String recordQuery= "SELECT * FROM USERS WHERE EXISTS (SELECT * FROM USERS WHERE USER_NAME=?);";
+	final String greetedUsersCountSql = "SELECT COUNT(*) FROM USERS WHERE COUNT>0;";
+	final String greetedUsersSql = "SELECT * FROM USERS WHERE COUNT>0;";
 
 	private PreparedStatement pstmt;
 	private Statement stmt;
 
 	public void addUserToDataBase(User u) {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
-			Class.forName("org.h2.Driver");
+		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+			Class.forName("org.postgresql.Driver");
 			
 			pstmt = con.prepareStatement(addUserSql);
 
 			pstmt.setString(1, u.getUserName());
 			pstmt.setInt(2, u.getGreetCount());
 			pstmt.executeUpdate();
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
-			
-		} catch (SQLException se) {
-			System.out.println(se + " : Sql query issues or database");
-			se.printStackTrace();
-		}
-	}
-	
-	public void deleteGreetedRecordsFromDataBase() {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
-			Class.forName("org.h2.Driver");
-			
-			stmt = con.createStatement();
-			
-			stmt.executeUpdate(deleteUserSql);
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
-			
-		} catch (SQLException se) {
-			System.out.println(se + " : Sql query issues or database");
-			se.printStackTrace();
-		}
-
-
-	} 
-	
-	public void updateDataBase(String name) {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
-			Class.forName("org.h2.Driver");
-			
-			PreparedStatement pstmt1 = con.prepareStatement(getUserSql);
-			pstmt1.setString(1, name);
-			
-			ResultSet rs = pstmt1.executeQuery();
-			rs.next();
-			
-			int greetCount = rs.getInt("GREET_COUNT");
-			
-			String updatedb = "UPDATE USERS SET GREET_COUNT=? WHERE NAME=?";
-			
-			pstmt = con.prepareStatement(updatedb);
-			
-			pstmt.setInt(1, ++greetCount);
-			pstmt.setString(2, name);
-			pstmt.executeUpdate();
+			pstmt.close();
 			
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
@@ -94,12 +47,13 @@ public class DataBaseCommandsProcessor {
 	}
 	
 	public void clearDataBase() {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
-			Class.forName("org.h2.Driver");
+		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+			Class.forName("org.postgresql.Driver");
 			
 			stmt = con.createStatement();
 			
-			stmt.executeUpdate(updatedbSql);
+			stmt.executeUpdate(cleardbSql);
+			stmt.close();
 			
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
@@ -111,9 +65,170 @@ public class DataBaseCommandsProcessor {
 		}
 	}
 	
+	
+	public void deleteGreetedRecordsFromDataBase() {
+		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+			Class.forName("org.postgresql.Driver");
+			
+			stmt = con.createStatement();
+			
+			stmt.executeUpdate(deleteUserSql);
+			stmt.close();
+			
+		} catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
+		}
+	} 
+	
+	public boolean checkIfRecordExists(String name) {
+		boolean recordExist = false;
+		
+		name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase(); 
+		
+		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+			Class.forName("org.postgresql.Driver");
+			
+			pstmt = con.prepareStatement(recordQuery);
+			pstmt.setString(1, name);
+			
+			recordExist = pstmt.executeQuery().next();
+			pstmt.close();
+			
+		} catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
+		}
+		
+		return recordExist;
+	}
+	
+	public void updateDataBase(String name) {
+		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+			Class.forName("org.postgresql.Driver");
+			
+			if(checkIfRecordExists(name)) {
+				PreparedStatement pstmt1 = con.prepareStatement(getUserSql);
+				pstmt1.setString(1, name);
+				
+				ResultSet rs = pstmt1.executeQuery();
+				rs.next();
+				
+				int greetCount = rs.getInt("COUNT");
+				
+				String updatedb = "UPDATE USERS SET COUNT=? WHERE USER_NAME=?";
+				
+				pstmt = con.prepareStatement(updatedb);
+				
+				pstmt.setInt(1, ++greetCount);
+				pstmt.setString(2, name);
+				pstmt.executeUpdate();
+				pstmt.close();
+			}
+			
+		} catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
+		}
+	}
+	
+	public int countGreetedUsers() {
+		int greetedUserCount = 0;
+		
+		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+			Class.forName("org.postgresql.Driver");
+			
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(greetedUsersCountSql);
+			
+			rs.next();
+			
+			greetedUserCount = rs.getInt(1);
+			
+			stmt.close();
+			
+		} catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
+		}
+		
+		return greetedUserCount;
+	}
+	
+	public ArrayList<String> getAllGreetedUsers() {
+		ArrayList<String> greetedUsers = new ArrayList<>();
+		
+		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+			Class.forName("org.postgresql.Driver");
+						
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(greetedUsersSql);
+			
+			while(rs.next()) {
+				greetedUsers.add(rs.getString("USER_NAME") + " has been greeted " + rs.getInt("COUNT") + " time(s)");
+			}
+			
+		} catch(ClassNotFoundException cne) {
+			System.out.println(cne + " : Drivers failed to load");
+			cne.printStackTrace();
+			
+		} catch (SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
+		}
+		
+		return greetedUsers;
+	}
+	
+	public String queryGreetedUser(String name) {
+		if(checkIfRecordExists(name)) {
+			try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+				Class.forName("org.postgresql.Driver");
+				
+				String greetedUserQuery = "SELECT * FROM USERS WHERE USER_NAME=?;";
+				
+				PreparedStatement pstmt = con.prepareStatement(greetedUserQuery);
+				pstmt.setString(1, name);
+				
+				ResultSet rs = pstmt.executeQuery();
+				
+				rs.next();
+				
+				return rs.getString("USER_NAME") + " has been greeted " + rs.getInt("COUNT") + " time(s)";
+				
+			} catch(ClassNotFoundException cne) {
+				System.out.println(cne + " : Drivers failed to load");
+				cne.printStackTrace();
+				
+			} catch (SQLException se) {
+				System.out.println(se + " : Sql query issues or database");
+				se.printStackTrace();
+			}
+		}
+		
+		return "User does not exist";
+	}
+	
+	
 	public void clearUserDataBase(String name) {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "admin", "1234")) { 
-			Class.forName("org.h2.Driver");
+		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+			Class.forName("org.postgresql.Driver");
 
 			name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 			
@@ -131,122 +246,14 @@ public class DataBaseCommandsProcessor {
 			se.printStackTrace();
 		}
 	}
-	
-	public boolean checkIfRecordExists(String n) {
-		boolean recordExist = false;
-		
-		n = n.substring(0, 1).toUpperCase() + n.substring(1).toLowerCase(); 
-		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) { 
-			Class.forName("org.h2.Driver");
 			
-			pstmt = con.prepareStatement(recordQuery);
-			pstmt.setString(1, n);
-			
-			recordExist = pstmt.executeQuery().next();
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
-			
-		} catch (SQLException se) {
-			System.out.println(se + " : Sql query issues or database");
-			se.printStackTrace();
-		}
-		
-		return recordExist;
-	}
-	
-	public int countGreetedUsers() {
-		int greetedUserCount = 0;
-		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) { 
-			Class.forName("org.h2.Driver");
-			
-			String greetedUsersQuery = "SELECT COUNT(*) FROM USERS WHERE GREET_COUNT>0;";
-			
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(greetedUsersQuery);
-			
-			rs.next();
-			
-			greetedUserCount = rs.getInt(1);
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
-			
-		} catch (SQLException se) {
-			System.out.println(se + " : Sql query issues or database");
-			se.printStackTrace();
-		}
-		
-		return greetedUserCount;
-	}
-	
-	public ArrayList<String> queryGreetedUsers() {
-		ArrayList<String> greetedUsers = new ArrayList<>();
-		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) { 
-			Class.forName("org.h2.Driver");
-			
-			String greetedUsersQuery = "SELECT * FROM USERS WHERE GREET_COUNT>0;";
-			
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(greetedUsersQuery);
-			
-			while(rs.next()) {
-				greetedUsers.add(rs.getString("NAME") + " has been greeted " + rs.getInt("GREET_COUNT") + " time(s)");
-			}
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
-			
-		} catch (SQLException se) {
-			System.out.println(se + " : Sql query issues or database");
-			se.printStackTrace();
-		}
-		
-		return greetedUsers;
-	}
-	
-	public String queryGreetedUser(String name) {
-		if(checkIfRecordExists(name)) {
-			try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) { 
-				Class.forName("org.h2.Driver");
-				
-				String greetedUserQuery = "SELECT * FROM USERS WHERE NAME=?;";
-				
-				PreparedStatement pstmt = con.prepareStatement(greetedUserQuery);
-				pstmt.setString(1, name);
-				
-				ResultSet rs = pstmt.executeQuery();
-				
-				rs.next();
-				
-				return rs.getString("NAME") + " has been greeted " + rs.getInt("GREET_COUNT") + " time(s)";
-				
-			} catch(ClassNotFoundException cne) {
-				System.out.println(cne + " : Drivers failed to load");
-				cne.printStackTrace();
-				
-			} catch (SQLException se) {
-				System.out.println(se + " : Sql query issues or database");
-				se.printStackTrace();
-			}
-		}
-		
-		return "User does not exist";
-	}
-	
 	public int getUserGreetCount(String name) {
 		int greetCount = 0;
 		
-		try(Connection con = DriverManager.getConnection("jdbc:h2:file:./target/user_database", "admin", "1234")) { 
-			Class.forName("org.h2.Driver");
+		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+			Class.forName("org.postgresql.Driver");
 			
-			String userGreetCountQuery = "SELECT * FROM USERS WHERE NAME=?;";
+			String userGreetCountQuery = "SELECT * FROM USERS WHERE USER_NAME=?;";
 			
 			PreparedStatement ps = con.prepareStatement(userGreetCountQuery);
 			ps.setString(1,  name);
@@ -254,7 +261,7 @@ public class DataBaseCommandsProcessor {
 			ResultSet rs = ps.executeQuery();
 			rs.next();
 			
-			greetCount = rs.getInt("GREET_COUNT");
+			greetCount = rs.getInt("COUNT");
 		
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
