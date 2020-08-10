@@ -19,7 +19,7 @@ class DataBaseCommandsProcessorTest {
 	
 	DataBaseCommandsProcessorTest() throws SQLException{
 		
-		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98");
+		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
 		dbcp = new DataBaseCommandsProcessor(connection);
 	}
 	
@@ -30,15 +30,15 @@ class DataBaseCommandsProcessorTest {
 		
 		dbcp.addUserToDataBase(new User("Thaabit"));
 		
-		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98")) {
+		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234")) {
 			Class.forName("org.postgresql.Driver");
 			
-			String retrieveTable = "SELECT * FROM USERS";
+			String retrieveTable = "SELECT * FROM PERSON";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
 			
-			assertEquals("Thaabit", rs.getString("USER_NAME"));
+			assertEquals("Thaabit", rs.getString("FIRST_NAME"));
 			
 			dbcp.clearDataBase();
 			
@@ -65,15 +65,15 @@ class DataBaseCommandsProcessorTest {
 		dbcp.addUserToDataBase(john);
 		dbcp.updateDataBase("John");
 		
-		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98")) {
+		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234")) {
 			Class.forName("org.postgresql.Driver");
 			
-			String retrieveTable = "SELECT * FROM USERS";
+			String retrieveTable = "SELECT * FROM GREETER";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
 			
-			assertEquals(4, rs.getInt("COUNT"));
+			assertEquals(4, rs.getInt("COUNTER"));
 			
 			dbcp.clearDataBase();
 			
@@ -98,10 +98,10 @@ class DataBaseCommandsProcessorTest {
 		dbcp.addUserToDataBase(john);
 		dbcp.updateDataBase("John");
 		
-		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98")) {
+		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234")) {
 			Class.forName("org.postgresql.Driver");
 			
-			String retrieveTable = "SELECT COUNT(*) FROM USERS WHERE COUNT>0";
+			String retrieveTable = "SELECT COUNT(*) FROM PERSON WHERE COUNTER>0";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();

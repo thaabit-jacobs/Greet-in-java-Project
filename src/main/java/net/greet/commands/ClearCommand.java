@@ -13,7 +13,7 @@ public class ClearCommand implements Command {
 	public String execute(Context context) {
 		
 		try {
-			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98");
+			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
 			DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(con);
 			if(context.getNameEntered().equalsIgnoreCase(" ")) {
 				if(dbcp.countGreetedUsers() == 0)

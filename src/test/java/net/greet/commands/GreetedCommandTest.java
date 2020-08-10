@@ -2,6 +2,10 @@ package net.greet.commands;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.Test;
 
 import net.greet.processors.database_processors.DataBaseCommandsProcessor;
@@ -9,12 +13,20 @@ import net.greet.processors.user_input.Context;
 import net.greet.users.User;
 
 class GreetedCommandTest {
-/*
+	private final String jdbcURL = "jdbc:postgresql://localhost:5432/greeter";
+	private Connection connection;
+	private final DataBaseCommandsProcessor db;
+	
+	GreetedCommandTest() throws SQLException{
+		
+		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98");
+		db = new DataBaseCommandsProcessor(connection);
+	}
+
 	@Test
 	void shouldReturnListOfGreetedUsrs() {
 		Context context = new Context("greeted");
 		GreetedCommand gc = new GreetedCommand();
-		DataBaseCommandsProcessor db = new DataBaseCommandsProcessor();
 		db.clearDataBase();
 		
 		User john = new User("John");
@@ -32,7 +44,6 @@ class GreetedCommandTest {
 	void shouldReturnGreetedUsrs() {
 		Context context = new Context("greeted John");
 		GreetedCommand gc = new GreetedCommand();
-		DataBaseCommandsProcessor db = new DataBaseCommandsProcessor();
 		db.clearDataBase();
 		
 		User john = new User("John");
@@ -45,6 +56,4 @@ class GreetedCommandTest {
 		
 		db.clearDataBase();
 	}
-	*/
-
 }

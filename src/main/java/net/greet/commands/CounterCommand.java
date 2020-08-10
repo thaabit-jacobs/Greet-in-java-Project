@@ -13,7 +13,7 @@ public class CounterCommand implements Command {
 		String greetedUsers = "";
 		
 		try {
-			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98");
+			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
 			DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(con);
 			greetedUsers = "The number of unique user(s) greeted: " + dbcp.countGreetedUsers();
 		} catch (SQLException e) {

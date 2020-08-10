@@ -1,0 +1,35 @@
+body
+{
+    text-align: center;
+}
+.navbar-brand {
+    padding-top: 0.125rem;
+    padding-bottom: .125rem;
+    margin: 0.125em 0.5em;
+}
+
+nav
+{
+    height: 65px;    
+}
+
+#nav-container
+{
+    display: inline-block;
+    text-align: center;
+}
+
+ul
+{
+    margin: 1em;
+}
+
+label
+{
+    margin: 0 0.25em;
+}
+
+.btn-lg
+{
+    width: 8em;
+}

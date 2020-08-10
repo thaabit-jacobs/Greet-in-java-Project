@@ -17,7 +17,7 @@ public class GreetCommand implements Command{
 				return "User not found";
 				
 		} else if(context.getLanguageEntered().equalsIgnoreCase(" ")) {
-			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98");
+			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
 			DataBaseCommandsProcessor db = new DataBaseCommandsProcessor(con);
 			if(db.checkIfRecordExists(context.getNameEntered())) {
 				db.updateDataBase(context.getNameEntered());
@@ -30,7 +30,7 @@ public class GreetCommand implements Command{
 			}
 			
 		} else {
-			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98");
+			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
 			DataBaseCommandsProcessor db = new DataBaseCommandsProcessor(con);
 			
 			if(db.checkIfRecordExists(context.getNameEntered())) {

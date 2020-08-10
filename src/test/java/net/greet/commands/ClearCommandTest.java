@@ -2,6 +2,10 @@ package net.greet.commands;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.Test;
 
 import net.greet.processors.database_processors.DataBaseCommandsProcessor;
@@ -9,10 +13,18 @@ import net.greet.processors.user_input.Context;
 import net.greet.users.User;
 
 class ClearCommandTest {
-/*
+	private final String jdbcURL = "jdbc:postgresql://localhost:5432/greeter";
+	private Connection connection;
+	private final DataBaseCommandsProcessor db;
+	
+	ClearCommandTest() throws SQLException{
+		
+		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98");
+		db = new DataBaseCommandsProcessor(connection);
+	}
+
 	@Test
 	void shouldClearUser() {
-		DataBaseCommandsProcessor db = new DataBaseCommandsProcessor();
 		Context context = new Context("clear John");
 		ClearCommand cc = new ClearCommand();
 		
@@ -28,7 +40,6 @@ class ClearCommandTest {
 	
 	@Test
 	void shouldClearAllusersGreeted() {
-		DataBaseCommandsProcessor db = new DataBaseCommandsProcessor();
 		Context context = new Context("clear");
 		ClearCommand cc = new ClearCommand();
 		
@@ -41,5 +52,5 @@ class ClearCommandTest {
 		
 		db.clearDataBase();
 	}
-*/
+
 }

@@ -1,0 +1,8 @@
+net\greet\commands\GreetCommandTest.class
+net\greet\greet_languages\LanguageTest.class
+net\greet\commands\CounterCommandTest.class
+net\greet\commands\GreetedCommandTest.class
+net\greet\processors\ContextTest.class
+net\greet\user\UserTest.class
+net\greet\commands\ClearCommandTest.class
+net\greet\processors\database_processors\DataBaseCommandsProcessorTest.class

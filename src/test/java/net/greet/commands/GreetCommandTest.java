@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import net.greet.processors.user_input.Context;
 
 class GreetCommandTest {
-/*
 	@Test
 	void shouldExecuteGreetCommandWithDefaultLanguage() {
 		Context context = new Context("greet John");
@@ -31,5 +30,4 @@ class GreetCommandTest {
 		
 		assertEquals(true, gc.execute(context).equalsIgnoreCase("User not found"));
 	}
-	*/
 }

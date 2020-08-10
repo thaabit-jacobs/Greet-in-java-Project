@@ -14,15 +14,14 @@ public class DataBaseCommandsProcessor {
 	
 	private final Connection connection;
 	
-	final String jdbcURL = "jdbc:postgresql://localhost:5432/greeter";
-	final String addUserSql = "INSERT INTO users(USER_NAME, COUNT) VALUES(?, ?)";
-	final String deleteUserSql = "DELETE FROM users WHERE COUNT>0";
-	final String getUserSql = "SELECT * FROM users WHERE USER_NAME=?";
-	final String cleardbSql = "DELETE FROM users";
-	final String updatedbSql2 = "UPDATE users SET COUNT=? WHERE USER_NAME=?";
-	final String recordQuery= "SELECT * FROM USERS WHERE EXISTS (SELECT * FROM USERS WHERE USER_NAME=?);";
-	final String greetedUsersCountSql = "SELECT COUNT(*) FROM USERS WHERE COUNT>0;";
-	final String greetedUsersSql = "SELECT * FROM USERS WHERE COUNT>0;";
+	final String addUserSql = "INSERT INTO PERSON(FIRST_NAME, COUNTER) VALUES(?, ?)";
+	final String deleteUserSql = "DELETE FROM PERSON WHERE COUNTER>0";
+	final String getUserSql = "SELECT * FROM PERSON WHERE FIRST_NAME=?";
+	final String cleardbSql = "DELETE FROM PERSON";
+	final String updatedbSql2 = "UPDATE PERSON SET COUNTER=? WHERE FIRST_NAME=?";
+	final String recordQuery= "SELECT * FROM PERSON WHERE EXISTS (SELECT * FROM PERSON WHERE FIRST_NAME=?);";
+	final String greetedUsersCountSql = "SELECT COUNT(*) FROM PERSON WHERE COUNTER>0;";
+	final String greetedUsersSql = "SELECT * FROM PERSON WHERE COUNTER>0;";
 
 	private PreparedStatement pstmt;
 	private Statement stmt;
@@ -128,9 +127,9 @@ public class DataBaseCommandsProcessor {
 				ResultSet rs = pstmt1.executeQuery();
 				rs.next();
 				
-				int greetCount = rs.getInt("COUNT");
+				int greetCount = rs.getInt("COUNTER");
 				
-				String updatedb = "UPDATE USERS SET COUNT=? WHERE USER_NAME=?";
+				String updatedb = "UPDATE PERSON SET COUNTER=? WHERE FIRST_NAME=?";
 				
 				pstmt = connection.prepareStatement(updatedb);
 				
@@ -187,7 +186,7 @@ public class DataBaseCommandsProcessor {
 			ResultSet rs = stmt.executeQuery(greetedUsersSql);
 			
 			while(rs.next()) {
-				greetedUsers.add(rs.getString("USER_NAME") + " has been greeted " + rs.getInt("COUNT") + " time(s)");
+				greetedUsers.add(rs.getString("FIRST_NAME") + " has been greeted " + rs.getInt("COUNTER") + " time(s)");
 			}
 			
 		} catch(ClassNotFoundException cne) {
@@ -207,7 +206,7 @@ public class DataBaseCommandsProcessor {
 			try { 
 				Class.forName("org.postgresql.Driver");
 				
-				String greetedUserQuery = "SELECT * FROM USERS WHERE USER_NAME=?;";
+				String greetedUserQuery = "SELECT * FROM PERSON WHERE FIRST_NAME=?;";
 				
 				PreparedStatement pstmt = connection.prepareStatement(greetedUserQuery);
 				pstmt.setString(1, name);
@@ -216,7 +215,7 @@ public class DataBaseCommandsProcessor {
 				
 				rs.next();
 				
-				return rs.getString("USER_NAME") + " has been greeted " + rs.getInt("COUNT") + " time(s)";
+				return rs.getString("FIRST_NAME") + " has been greeted " + rs.getInt("COUNTER") + " time(s)";
 				
 			} catch(ClassNotFoundException cne) {
 				System.out.println(cne + " : Drivers failed to load");
@@ -256,10 +255,10 @@ public class DataBaseCommandsProcessor {
 	public int getUserGreetCount(String name) {
 		int greetCount = 0;
 		
-		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+		try { 
 			Class.forName("org.postgresql.Driver");
 			
-			String userGreetCountQuery = "SELECT * FROM USERS WHERE USER_NAME=?;";
+			String userGreetCountQuery = "SELECT * FROM PERSON WHERE FIRST_NAME=?;";
 			
 			PreparedStatement ps = connection.prepareStatement(userGreetCountQuery);
 			ps.setString(1,  name);
@@ -267,7 +266,7 @@ public class DataBaseCommandsProcessor {
 			ResultSet rs = ps.executeQuery();
 			rs.next();
 			
-			greetCount = rs.getInt("COUNT");
+			greetCount = rs.getInt("COUNTER");
 		
 		} catch(ClassNotFoundException cne) {
 			System.out.println(cne + " : Drivers failed to load");
