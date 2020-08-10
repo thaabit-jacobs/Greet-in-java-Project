@@ -12,6 +12,8 @@ import net.greet.users.*;
 
 public class DataBaseCommandsProcessor {
 	
+	private final Connection connection;
+	
 	final String jdbcURL = "jdbc:postgresql://localhost:5432/greeter";
 	final String addUserSql = "INSERT INTO users(USER_NAME, COUNT) VALUES(?, ?)";
 	final String deleteUserSql = "DELETE FROM users WHERE COUNT>0";
@@ -25,11 +27,15 @@ public class DataBaseCommandsProcessor {
 	private PreparedStatement pstmt;
 	private Statement stmt;
 
+	public DataBaseCommandsProcessor(Connection connection) {
+		this.connection = connection;
+	}
+	
 	public void addUserToDataBase(User u) {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+		try { 
 			Class.forName("org.postgresql.Driver");
 			
-			pstmt = con.prepareStatement(addUserSql);
+			pstmt = connection.prepareStatement(addUserSql);
 
 			pstmt.setString(1, u.getUserName());
 			pstmt.setInt(2, u.getGreetCount());
@@ -47,10 +53,10 @@ public class DataBaseCommandsProcessor {
 	}
 	
 	public void clearDataBase() {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+		try { 
 			Class.forName("org.postgresql.Driver");
 			
-			stmt = con.createStatement();
+			stmt = connection.createStatement();
 			
 			stmt.executeUpdate(cleardbSql);
 			stmt.close();
@@ -67,10 +73,10 @@ public class DataBaseCommandsProcessor {
 	
 	
 	public void deleteGreetedRecordsFromDataBase() {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+		try { 
 			Class.forName("org.postgresql.Driver");
 			
-			stmt = con.createStatement();
+			stmt = connection.createStatement();
 			
 			stmt.executeUpdate(deleteUserSql);
 			stmt.close();
@@ -90,10 +96,10 @@ public class DataBaseCommandsProcessor {
 		
 		name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase(); 
 		
-		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+		try { 
 			Class.forName("org.postgresql.Driver");
 			
-			pstmt = con.prepareStatement(recordQuery);
+			pstmt = connection.prepareStatement(recordQuery);
 			pstmt.setString(1, name);
 			
 			recordExist = pstmt.executeQuery().next();
@@ -112,11 +118,11 @@ public class DataBaseCommandsProcessor {
 	}
 	
 	public void updateDataBase(String name) {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+		try { 
 			Class.forName("org.postgresql.Driver");
 			
 			if(checkIfRecordExists(name)) {
-				PreparedStatement pstmt1 = con.prepareStatement(getUserSql);
+				PreparedStatement pstmt1 = connection.prepareStatement(getUserSql);
 				pstmt1.setString(1, name);
 				
 				ResultSet rs = pstmt1.executeQuery();
@@ -126,7 +132,7 @@ public class DataBaseCommandsProcessor {
 				
 				String updatedb = "UPDATE USERS SET COUNT=? WHERE USER_NAME=?";
 				
-				pstmt = con.prepareStatement(updatedb);
+				pstmt = connection.prepareStatement(updatedb);
 				
 				pstmt.setInt(1, ++greetCount);
 				pstmt.setString(2, name);
@@ -147,10 +153,10 @@ public class DataBaseCommandsProcessor {
 	public int countGreetedUsers() {
 		int greetedUserCount = 0;
 		
-		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+		try { 
 			Class.forName("org.postgresql.Driver");
 			
-			stmt = con.createStatement();
+			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(greetedUsersCountSql);
 			
 			rs.next();
@@ -174,10 +180,10 @@ public class DataBaseCommandsProcessor {
 	public ArrayList<String> getAllGreetedUsers() {
 		ArrayList<String> greetedUsers = new ArrayList<>();
 		
-		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+		try { 
 			Class.forName("org.postgresql.Driver");
 						
-			Statement stmt = con.createStatement();
+			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(greetedUsersSql);
 			
 			while(rs.next()) {
@@ -198,12 +204,12 @@ public class DataBaseCommandsProcessor {
 	
 	public String queryGreetedUser(String name) {
 		if(checkIfRecordExists(name)) {
-			try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+			try { 
 				Class.forName("org.postgresql.Driver");
 				
 				String greetedUserQuery = "SELECT * FROM USERS WHERE USER_NAME=?;";
 				
-				PreparedStatement pstmt = con.prepareStatement(greetedUserQuery);
+				PreparedStatement pstmt = connection.prepareStatement(greetedUserQuery);
 				pstmt.setString(1, name);
 				
 				ResultSet rs = pstmt.executeQuery();
@@ -227,12 +233,12 @@ public class DataBaseCommandsProcessor {
 	
 	
 	public void clearUserDataBase(String name) {
-		try(Connection con = DriverManager.getConnection(jdbcURL, "postgres", "Password98")) { 
+		try{ 
 			Class.forName("org.postgresql.Driver");
 
 			name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 			
-			pstmt = con.prepareStatement(updatedbSql2);
+			pstmt = connection.prepareStatement(updatedbSql2);
 			pstmt.setInt(1, 0);
 			pstmt.setString(2, name);
 			pstmt.executeUpdate();
@@ -255,7 +261,7 @@ public class DataBaseCommandsProcessor {
 			
 			String userGreetCountQuery = "SELECT * FROM USERS WHERE USER_NAME=?;";
 			
-			PreparedStatement ps = con.prepareStatement(userGreetCountQuery);
+			PreparedStatement ps = connection.prepareStatement(userGreetCountQuery);
 			ps.setString(1,  name);
 			
 			ResultSet rs = ps.executeQuery();

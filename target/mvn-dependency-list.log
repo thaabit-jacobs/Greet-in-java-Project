@@ -10,7 +10,7 @@ The following files have been resolved:
    org.eclipse.jetty:jetty-xml:jar:9.4.18.v20190429:compile
    com.sparkjava:spark-template-handlebars:jar:2.7.1:compile
    org.eclipse.jetty.websocket:websocket-servlet:jar:9.4.18.v20190429:compile
-   com.h2database:h2:jar:1.4.199:compile
+   org.postgresql:postgresql:jar:42.2.14:compile
    com.google.guava:guava:jar:14.0.1:compile
    org.eclipse.jetty.websocket:websocket-client:jar:9.4.18.v20190429:compile
    org.eclipse.jetty:jetty-webapp:jar:9.4.18.v20190429:compile

@@ -24,7 +24,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.4.3</version>
                 <configuration>
-                    <url>jdbc:postgresql://localhost:5432/users</url>
+                    <url>jdbc:postgresql://localhost:5432/greeter</url>
                     <user>postgres</user>
                     <password>Password98</password>
                 </configuration>

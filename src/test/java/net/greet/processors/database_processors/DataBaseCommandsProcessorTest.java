@@ -13,10 +13,18 @@ import org.junit.jupiter.api.Test;
 import net.greet.users.*;
 
 class DataBaseCommandsProcessorTest {
-
+	private final String jdbcURL = "jdbc:postgresql://localhost:5432/greeter";
+	private Connection connection;
+	private final DataBaseCommandsProcessor dbcp;
+	
+	DataBaseCommandsProcessorTest() throws SQLException{
+		
+		connection = DriverManager.getConnection(jdbcURL, "postgres", "Password98");
+		dbcp = new DataBaseCommandsProcessor(connection);
+	}
+	
 	@Test
 	void shouldAddUserToDataBase() {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
 		
 		dbcp.clearDataBase();
 		
@@ -47,7 +55,6 @@ class DataBaseCommandsProcessorTest {
 	
 	@Test
 	void shouldUpdateUserGreetCountInDataBase() {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
 		dbcp.clearDataBase();
 		
 		User john = new User("John");
@@ -82,8 +89,7 @@ class DataBaseCommandsProcessorTest {
 	
 	
 	@Test
-	void shouldReturnTheCountOfUsersGreeted() {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
+	void shouldReturnTheCountOfUsersGreeted() { 
 		dbcp.clearDataBase();
 		
 		User john = new User("John");
@@ -116,7 +122,6 @@ class DataBaseCommandsProcessorTest {
 		
 	@Test
 	void shouldReturnListGreetedUsers() {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
 		dbcp.clearDataBase();
 		
 		User john = new User("John");
@@ -131,7 +136,6 @@ class DataBaseCommandsProcessorTest {
 	
 	@Test
 	void shouldReturnGreetedUsers() {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
 		dbcp.clearDataBase();
 		
 		User john = new User("John");
@@ -146,7 +150,6 @@ class DataBaseCommandsProcessorTest {
 	
 	@Test
 	void shouldReturnUserDoesNotExistForInvalidUserName() {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(); 
 		dbcp.clearDataBase();
 		
 		User john = new User("John");
