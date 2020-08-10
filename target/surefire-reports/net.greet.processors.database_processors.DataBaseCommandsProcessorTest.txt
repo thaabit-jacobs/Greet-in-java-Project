@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: net.greet.processors.database_processors.DataBaseCommandsProcessorTest
--------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.417 s - in net.greet.processors.database_processors.DataBaseCommandsProcessorTest

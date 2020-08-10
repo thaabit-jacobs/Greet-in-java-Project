@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: net.greet.processors.ContextTest
--------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s - in net.greet.processors.ContextTest

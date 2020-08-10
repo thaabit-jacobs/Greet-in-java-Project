@@ -19,7 +19,7 @@ class DataBaseCommandsProcessorTest {
 	
 	DataBaseCommandsProcessorTest() throws SQLException{
 		
-		connection = DriverManager.getConnection(jdbcURL, "postgres", "Password98");
+		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98");
 		dbcp = new DataBaseCommandsProcessor(connection);
 	}
 	

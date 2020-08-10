@@ -1,5 +1,9 @@
 package net.greet.commands;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import net.greet.exceptions.NameNotFoundException;
 import net.greet.processors.database_processors.DataBaseCommandsProcessor;
 import net.greet.processors.user_input.Context;
@@ -7,9 +11,10 @@ import net.greet.processors.user_input.Context;
 public class ClearCommand implements Command {
 	
 	public String execute(Context context) {
-		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor();
 		
 		try {
+			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98");
+			DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(con);
 			if(context.getNameEntered().equalsIgnoreCase(" ")) {
 				if(dbcp.countGreetedUsers() == 0)
 					return "No users have been greeted";
@@ -29,6 +34,9 @@ public class ClearCommand implements Command {
 			
 		} catch(NameNotFoundException e) {
 			return "User not found";
+		} catch(SQLException se) {
+			System.out.println(se + " : Sql query issues or database");
+			se.printStackTrace();
 		}
 		
 		return "No Users have been greeted";
