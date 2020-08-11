@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import net.greet.users.*;
 
 public class DataBaseCommandsProcessor {
-	
+
 	private final Connection connection;
-	
+
 	final String addUserSql = "INSERT INTO PERSON(FIRST_NAME, COUNTER) VALUES(?, ?)";
 	final String deleteUserSql = "DELETE FROM PERSON WHERE COUNTER>0";
 	final String getUserSql = "SELECT * FROM PERSON WHERE FIRST_NAME=?";
 	final String cleardbSql = "DELETE FROM PERSON";
 	final String updatedbSql2 = "UPDATE PERSON SET COUNTER=? WHERE FIRST_NAME=?";
-	final String recordQuery= "SELECT * FROM PERSON WHERE EXISTS (SELECT * FROM PERSON WHERE FIRST_NAME=?);";
+	final String recordQuery = "SELECT * FROM PERSON WHERE EXISTS (SELECT * FROM PERSON WHERE FIRST_NAME=?);";
 	final String greetedUsersCountSql = "SELECT COUNT(*) FROM PERSON WHERE COUNTER>0;";
 	final String greetedUsersSql = "SELECT * FROM PERSON WHERE COUNTER>0;";
 
@@ -27,23 +27,23 @@ public class DataBaseCommandsProcessor {
 	private Statement stmt;
 
 	public DataBaseCommandsProcessor(Connection connection) {
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Drivers not loaded");
+			e.printStackTrace();
+		}
 		this.connection = connection;
 	}
 	
 	public void addUserToDataBase(User u) {
 		try { 
-			Class.forName("org.postgresql.Driver");
-			
 			pstmt = connection.prepareStatement(addUserSql);
 
 			pstmt.setString(1, u.getUserName());
 			pstmt.setInt(2, u.getGreetCount());
 			pstmt.executeUpdate();
 			pstmt.close();
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
@@ -53,16 +53,10 @@ public class DataBaseCommandsProcessor {
 	
 	public void clearDataBase() {
 		try { 
-			Class.forName("org.postgresql.Driver");
-			
 			stmt = connection.createStatement();
 			
 			stmt.executeUpdate(cleardbSql);
 			stmt.close();
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
@@ -73,16 +67,10 @@ public class DataBaseCommandsProcessor {
 	
 	public void deleteGreetedRecordsFromDataBase() {
 		try { 
-			Class.forName("org.postgresql.Driver");
-			
 			stmt = connection.createStatement();
 			
 			stmt.executeUpdate(deleteUserSql);
 			stmt.close();
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
@@ -96,17 +84,11 @@ public class DataBaseCommandsProcessor {
 		name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase(); 
 		
 		try { 
-			Class.forName("org.postgresql.Driver");
-			
 			pstmt = connection.prepareStatement(recordQuery);
 			pstmt.setString(1, name);
 			
 			recordExist = pstmt.executeQuery().next();
 			pstmt.close();
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
@@ -118,8 +100,6 @@ public class DataBaseCommandsProcessor {
 	
 	public void updateDataBase(String name) {
 		try { 
-			Class.forName("org.postgresql.Driver");
-			
 			if(checkIfRecordExists(name)) {
 				PreparedStatement pstmt1 = connection.prepareStatement(getUserSql);
 				pstmt1.setString(1, name);
@@ -139,10 +119,6 @@ public class DataBaseCommandsProcessor {
 				pstmt.close();
 			}
 			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
-			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
 			se.printStackTrace();
@@ -153,8 +129,6 @@ public class DataBaseCommandsProcessor {
 		int greetedUserCount = 0;
 		
 		try { 
-			Class.forName("org.postgresql.Driver");
-			
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(greetedUsersCountSql);
 			
@@ -163,10 +137,6 @@ public class DataBaseCommandsProcessor {
 			greetedUserCount = rs.getInt(1);
 			
 			stmt.close();
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
@@ -179,19 +149,13 @@ public class DataBaseCommandsProcessor {
 	public ArrayList<String> getAllGreetedUsers() {
 		ArrayList<String> greetedUsers = new ArrayList<>();
 		
-		try { 
-			Class.forName("org.postgresql.Driver");
-						
+		try { 				
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(greetedUsersSql);
 			
 			while(rs.next()) {
 				greetedUsers.add(rs.getString("FIRST_NAME") + " has been greeted " + rs.getInt("COUNTER") + " time(s)");
 			}
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
@@ -203,9 +167,7 @@ public class DataBaseCommandsProcessor {
 	
 	public String queryGreetedUser(String name) {
 		if(checkIfRecordExists(name)) {
-			try { 
-				Class.forName("org.postgresql.Driver");
-				
+			try { 		
 				String greetedUserQuery = "SELECT * FROM PERSON WHERE FIRST_NAME=?;";
 				
 				PreparedStatement pstmt = connection.prepareStatement(greetedUserQuery);
@@ -216,10 +178,6 @@ public class DataBaseCommandsProcessor {
 				rs.next();
 				
 				return rs.getString("FIRST_NAME") + " has been greeted " + rs.getInt("COUNTER") + " time(s)";
-				
-			} catch(ClassNotFoundException cne) {
-				System.out.println(cne + " : Drivers failed to load");
-				cne.printStackTrace();
 				
 			} catch (SQLException se) {
 				System.out.println(se + " : Sql query issues or database");
@@ -233,18 +191,12 @@ public class DataBaseCommandsProcessor {
 	
 	public void clearUserDataBase(String name) {
 		try{ 
-			Class.forName("org.postgresql.Driver");
-
 			name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 			
 			pstmt = connection.prepareStatement(updatedbSql2);
 			pstmt.setInt(1, 0);
 			pstmt.setString(2, name);
 			pstmt.executeUpdate();
-			
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
@@ -255,9 +207,7 @@ public class DataBaseCommandsProcessor {
 	public int getUserGreetCount(String name) {
 		int greetCount = 0;
 		
-		try { 
-			Class.forName("org.postgresql.Driver");
-			
+		try { 	
 			String userGreetCountQuery = "SELECT * FROM PERSON WHERE FIRST_NAME=?;";
 			
 			PreparedStatement ps = connection.prepareStatement(userGreetCountQuery);
@@ -268,10 +218,6 @@ public class DataBaseCommandsProcessor {
 			
 			greetCount = rs.getInt("COUNTER");
 		
-		} catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
-			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
 			se.printStackTrace();

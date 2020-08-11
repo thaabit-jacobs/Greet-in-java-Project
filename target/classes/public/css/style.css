@@ -52,6 +52,10 @@ form
     color: #84bef3;
 }
 
+.btn-cont
+{
+    margin-top: 1.5em;
+}
 a
 {
     display: inline-block;
@@ -59,4 +63,12 @@ a
     
 }
 
+ul
+{
+    margin: 1.5em;
+}
 
+label
+{
+    margin: 0 0.25em;
+}

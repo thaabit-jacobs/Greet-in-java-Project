@@ -32,7 +32,18 @@
             <form action="/greet" method="POST">
                 <input type="text" id="username" name="username">
                 <p id="example">"enter user name:"</p>
-                <button class="btn btn-secondary btn-lg" type="submit" value="Submit">greet</button>
+
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    {{#each lang}}
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="language" value={{this}}> {{this}}
+                    </label>
+                    {{/each}}
+                </div>
+                <div class="btn-cont">
+                    <button class="btn btn-secondary btn-lg" type="submit" value="Submit">greet</button>
+                </div>
+
             </form>
         </div>
 
@@ -43,11 +54,8 @@
                     class="badge badge-light">{{count}}</span></a>
 
             <a class="btn btn-outline-secondary" href="/clear" class="clear-link">clear</a>
-
-            <a class="btn btn-outline-secondary" href="/languages" class="lang-link">languages</a>
         </div>
     </div>
-
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

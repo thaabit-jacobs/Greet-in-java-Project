@@ -16,7 +16,8 @@ class DataBaseCommandsProcessorTest {
 	private Connection connection;
 	private final DataBaseCommandsProcessor dbcp;
 	
-	DataBaseCommandsProcessorTest() throws SQLException{
+	DataBaseCommandsProcessorTest() throws SQLException, ClassNotFoundException {
+		Class.forName("org.postgresql.Driver");
 		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
 		dbcp = new DataBaseCommandsProcessor(connection);
 	}
@@ -29,8 +30,6 @@ class DataBaseCommandsProcessorTest {
 		dbcp.addUserToDataBase(new User("Thaabit"));
 		
 		try{
-			Class.forName("org.postgresql.Driver");
-			
 			String retrieveTable = "SELECT * FROM PERSON";
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
@@ -39,10 +38,6 @@ class DataBaseCommandsProcessorTest {
 			assertEquals("Thaabit", rs.getString("FIRST_NAME"));
 			
 			dbcp.clearDataBase();
-			
-		}  catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
@@ -63,9 +58,7 @@ class DataBaseCommandsProcessorTest {
 		dbcp.addUserToDataBase(john);
 		dbcp.updateDataBase("John");
 		
-		try{
-			Class.forName("org.postgresql.Driver");
-			
+		try{	
 			String retrieveTable = "SELECT * FROM PERSON";
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
@@ -74,10 +67,6 @@ class DataBaseCommandsProcessorTest {
 			assertEquals(4, rs.getInt("COUNTER"));
 			
 			dbcp.clearDataBase();
-			
-		}  catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");
@@ -97,8 +86,6 @@ class DataBaseCommandsProcessorTest {
 		dbcp.updateDataBase("John");
 		
 		try{
-			Class.forName("org.postgresql.Driver");
-			
 			String retrieveTable = "SELECT COUNT(*) FROM PERSON WHERE COUNTER>0";
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
@@ -107,10 +94,6 @@ class DataBaseCommandsProcessorTest {
 			assertEquals(1, rs.getInt(1));
 			
 			dbcp.clearDataBase();
-			
-		}  catch(ClassNotFoundException cne) {
-			System.out.println(cne + " : Drivers failed to load");
-			cne.printStackTrace();
 			
 		} catch (SQLException se) {
 			System.out.println(se + " : Sql query issues or database");

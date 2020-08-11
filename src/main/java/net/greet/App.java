@@ -68,7 +68,6 @@ public class App
 		
 		Connection connection = getDatabaseConnection("jdbc:postgresql://localhost/greeter");
 		
-		//Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(connection);
 		
 		get("/", (request, response) -> {
@@ -76,7 +75,15 @@ public class App
 			model.put("greeting", "Greet Web App");
 			model.put("count", dbcp.countGreetedUsers());
 
-			selectedLanguage = request.queryParams("language");
+			Language[] availbleLang = Language.values();
+
+			List<Language> lang = new ArrayList<Language>();
+
+			for(Language l: availbleLang)
+				lang.add(l);
+
+			model.put("lang", lang);
+
 			System.out.println(selectedLanguage);
 
 			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
@@ -87,7 +94,16 @@ public class App
 			model.put("greeting", "Greet Web App");
 			model.put("count", dbcp.countGreetedUsers());
 
-			selectedLanguage = request.queryParams("language");
+			Language[] availbleLang = Language.values();
+
+			List<Language> lang = new ArrayList<Language>();
+
+			for(Language l: availbleLang)
+				lang.add(l);
+
+			model.put("lang", lang);
+
+			//selectedLanguage = request.queryParams("language");
 			System.out.println(selectedLanguage);
 
 			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
@@ -96,19 +112,29 @@ public class App
 		post("/greet", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
 			String name = request.queryParams("username");
+			selectedLanguage = request.queryParams("language");
 			
+			Language[] availbleLang = Language.values();
+
+			List<Language> lang = new ArrayList<Language>();
+
+			for(Language l: availbleLang)
+				lang.add(l);
+
 			String greeting  = "";
 			
 			if(name.equals(" ")) {
 				greeting = "User not found";
 				
+				model.put("lang", lang);
 				model.put("greeting", greeting);
 				model.put("count", dbcp.countGreetedUsers());
 
 				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
 			} else if(name.equals("")) {
 				greeting = "User not found";
-				
+
+				model.put("lang", lang);
 				model.put("greeting", greeting);
 				model.put("count", dbcp.countGreetedUsers());
 
@@ -126,7 +152,8 @@ public class App
 				dbcp.updateDataBase(name);
 				greeting = new User(name).greet(selectedLanguage);
 			}
-			
+
+			model.put("lang", lang);
 			model.put("greeting", greeting);
 			model.put("count", dbcp.countGreetedUsers());
 
@@ -195,20 +222,6 @@ public class App
 			model.put("counter", countRes);
 
 			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "counter.hbs"));
-		});
-
-		get("/languages", (request, response) -> {
-			Map<String, List<Language>> model = new HashMap<>();
-			Language[] availbleLang = Language.values();
-
-			List<Language> lang = new ArrayList<Language>();
-
-			for(Language l: availbleLang)
-				lang.add(l);
-
-			model.put("lang", lang);
-
-			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "language.hbs"));
 		});
 
 		get("/clear", (request, response) -> {
