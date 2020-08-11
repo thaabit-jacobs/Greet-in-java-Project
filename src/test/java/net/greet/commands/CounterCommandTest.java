@@ -19,7 +19,7 @@ class CounterCommandTest {
 	
 	CounterCommandTest() throws SQLException{
 		
-		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "Password98");
+		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
 		db = new DataBaseCommandsProcessor(connection);
 	}
 

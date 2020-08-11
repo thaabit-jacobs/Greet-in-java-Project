@@ -13,12 +13,10 @@ import org.junit.jupiter.api.Test;
 import net.greet.users.*;
 
 class DataBaseCommandsProcessorTest {
-	private final String jdbcURL = "jdbc:postgresql://localhost:5432/greeter";
 	private Connection connection;
 	private final DataBaseCommandsProcessor dbcp;
 	
 	DataBaseCommandsProcessorTest() throws SQLException{
-		
 		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
 		dbcp = new DataBaseCommandsProcessor(connection);
 	}
@@ -30,11 +28,11 @@ class DataBaseCommandsProcessorTest {
 		
 		dbcp.addUserToDataBase(new User("Thaabit"));
 		
-		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234")) {
+		try{
 			Class.forName("org.postgresql.Driver");
 			
 			String retrieveTable = "SELECT * FROM PERSON";
-			Statement stmt = con.createStatement();
+			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
 			
@@ -65,11 +63,11 @@ class DataBaseCommandsProcessorTest {
 		dbcp.addUserToDataBase(john);
 		dbcp.updateDataBase("John");
 		
-		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234")) {
+		try{
 			Class.forName("org.postgresql.Driver");
 			
-			String retrieveTable = "SELECT * FROM GREETER";
-			Statement stmt = con.createStatement();
+			String retrieveTable = "SELECT * FROM PERSON";
+			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
 			
@@ -98,11 +96,11 @@ class DataBaseCommandsProcessorTest {
 		dbcp.addUserToDataBase(john);
 		dbcp.updateDataBase("John");
 		
-		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234")) {
+		try{
 			Class.forName("org.postgresql.Driver");
 			
 			String retrieveTable = "SELECT COUNT(*) FROM PERSON WHERE COUNTER>0";
-			Statement stmt = con.createStatement();
+			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(retrieveTable);
 			rs.next();
 			

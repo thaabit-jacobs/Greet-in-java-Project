@@ -36,29 +36,41 @@ public class App
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, hbsPath));
 	}
 	
+    static Connection getDatabaseConnection(String defualtJdbcUrl) throws URISyntaxException, SQLException {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        String database_url = processBuilder.environment().get("DATABASE_URL");
+        if (database_url != null) {
+
+            URI uri = new URI(database_url);
+            String[] hostParts = uri.getUserInfo().split(":");
+            String username = hostParts[0];
+            String password = hostParts[1];
+            String host = uri.getHost();
+
+            int port = uri.getPort();
+
+            String path = uri.getPath();
+            String url = String.format("jdbc:postgresql://%s:%s%s", host, port, path);
+
+            return DriverManager.getConnection(url, username, password);
+
+        }
+
+        return DriverManager.getConnection(defualtJdbcUrl);
+
+    }
+    
 	public static void main(String[] args) throws URISyntaxException, SQLException 
 	{
 		staticFiles.location("/public");
 		
 		port(getHerokuAssignedPort());
 		
-		Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
+		Connection connection = getDatabaseConnection("jdbc:postgresql://localhost/greeter");
 		
+		//Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/greeter", "postgres", "1234");
 		DataBaseCommandsProcessor dbcp = new DataBaseCommandsProcessor(connection);
-
-		post("/", (request, response) -> {
-			Map<String, Object> model = new HashMap<>();
-			String name = request.queryParams("username");
-
-			
-			String greeting  = new GreetCommand().execute(new Context("greet " + name  + " " + selectedLanguage));
-
-			model.put("greeting", greeting);
-			model.put("count", dbcp.countGreetedUsers());
-
-			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
-		});
-
+		
 		get("/", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
 			model.put("greeting", "Greet Web App");
@@ -66,6 +78,57 @@ public class App
 
 			selectedLanguage = request.queryParams("language");
 			System.out.println(selectedLanguage);
+
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
+		});
+		
+		get("/greet", (request, response) -> {
+			Map<String, Object> model = new HashMap<>();
+			model.put("greeting", "Greet Web App");
+			model.put("count", dbcp.countGreetedUsers());
+
+			selectedLanguage = request.queryParams("language");
+			System.out.println(selectedLanguage);
+
+			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
+		});
+		
+		post("/greet", (request, response) -> {
+			Map<String, Object> model = new HashMap<>();
+			String name = request.queryParams("username");
+			
+			String greeting  = "";
+			
+			if(name.equals(" ")) {
+				greeting = "User not found";
+				
+				model.put("greeting", greeting);
+				model.put("count", dbcp.countGreetedUsers());
+
+				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
+			} else if(name.equals("")) {
+				greeting = "User not found";
+				
+				model.put("greeting", greeting);
+				model.put("count", dbcp.countGreetedUsers());
+
+				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
+			}
+			
+			name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+		
+			if(dbcp.checkIfRecordExists(name)) {
+				dbcp.updateDataBase(name);
+				greeting = new User(name).greet(selectedLanguage);
+				
+			} else {
+				dbcp.addUserToDataBase(new User(name));
+				dbcp.updateDataBase(name);
+				greeting = new User(name).greet(selectedLanguage);
+			}
+			
+			model.put("greeting", greeting);
+			model.put("count", dbcp.countGreetedUsers());
 
 			return new HandlebarsTemplateEngine().render(new ModelAndView(model, "index.hbs"));
 		});
@@ -170,6 +233,11 @@ public class App
 				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "clear.hbs"));
 			} else if(userCleared.equals(" ")) 
 			{
+				userCleared = "Invalid command entered";
+				model.put("greeted", userCleared);
+
+				return new HandlebarsTemplateEngine().render(new ModelAndView(model, "greeted.hbs"));
+			} else if(userCleared.equals("")) {
 				userCleared = "Invalid command entered";
 				model.put("greeted", userCleared);
 
